@@ -28,17 +28,15 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     include("../template/header.template.php");
     include("../class/categories.class.php");
     ?>
-    <br>
     <div class="container">
         <div class="col">
             <h1>Catégories</h1>
         </div>
-        <br>
         <div class="row">
             <div class="col-12 col-lg-9">
-                <form action="../php/categorie.traitement.php" method="post">
-                    <div class="card">
-                        <div class="card-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="../php/categorie.traitement.php" method="post">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -53,28 +51,23 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                     $oCategories = new Categorie($con);
                                     $lesCategories = $oCategories->getCategories();
                                     foreach ($lesCategories as $uneCategorie) {
-                                        $idcat = $uneCategorie['id_categorie'];
-                                        $libcat = 'libcategorie' . $idcat;
-                                        $desccat = 'desccategorie' . $idcat;
                                         echo "<tr>";
                                         echo "<th scope='row'>", $uneCategorie['id_categorie'], "</th>";
-                                        echo "<td><input class='form-control' type='text' name='", $libcat, "' value='", $uneCategorie['lib_categorie'], "'></td>";
-                                        echo "<td><textarea class='form-control' name='", $desccat, "'>", $uneCategorie['desc_categorie'], "</textarea></td>";
-                                        echo "<td><button class='btn btn-primary' name='update' value='", $uneCategorie['id_categorie'], "'
-                                        type=submit'>Modifier</button>
-                                        <button class='btn btn-danger' name='delete' value='", $uneCategorie['id_categorie'], "'    type=submit'>Supprimer</button></td>";
+                                        echo "<td>", $uneCategorie['lib_categorie'], "</td>";
+                                        echo "<td>", $uneCategorie['desc_categorie'], "</td>";
+                                        echo "<td><button class='btn btn-primary' name='gounecategorie' value='", $uneCategorie['id_categorie'], "' type='submit'>Modifier</button> <button class='btn btn-danger' name='delete' value='", $uneCategorie['id_categorie'], "' type='submit'>Supprimer</button></td>";
                                         echo "</tr>";
                                     }
                                     ?>
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="card-footer">
-                            <a href="dashboard.pages.php" class="btn btn-danger">Retour</a>
-                        </div>
+                        </form>
                     </div>
+                    <div class="card-footer">
+                        <a href="dashboard.pages.php" class="btn btn-danger">Retour</a>
+                    </div>
+                </div>
             </div>
-            </form>
             <div class="col-12 col-lg-3">
                 <div class="card">
                     <div class="card-header">

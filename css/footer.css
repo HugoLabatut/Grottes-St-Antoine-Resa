@@ -1,7 +1,12 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    flex-shrink: 0;
     line-height: 60px;
     box-shadow: 0px -3px 13px 0px rgba(0, 0, 0, 0.10);
 }

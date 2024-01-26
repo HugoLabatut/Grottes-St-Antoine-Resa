@@ -24,4 +24,21 @@ class Client
         $stmt->execute();
         return $stmt;
     }
+
+    public function setClient($n, $p, $rs, $mail, $tel, $adr, $cp, $vil)
+    {
+        $data = [
+            ":nom" => $n,
+            ":prenom" => $p,
+            ":raisonsoc" => $rs,
+            ":mail" => $mail,
+            ":tel" => $tel,
+            ":adresse" => $adr,
+            ":cp" => $cp,
+            ":ville" => $vil
+        ];
+        $sql = "INSERT INTO clients (nom_client, prenom_client, raison_sociale_client, mail_client, tel_client, adresse_client, cp_client, ville_client) VALUES (:nom, :prenom, :raisonsoc, :mail, :tel, :adresse, :cp, :ville)";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+    }
 }

@@ -55,7 +55,6 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                     <th class="col">ID</th>
                                     <th class="col">Libellé</th>
                                     <th class="col">Description</th>
-                                    <th class="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,7 +66,6 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                     echo "<th scope='row'>", $uneCategorie['id_categorie'], "</th>";
                                     echo "<td>", $uneCategorie['lib_categorie'], "</td>";
                                     echo "<td>", $uneCategorie['desc_categorie'], "</td>";
-                                    echo "<td><a href='#' class='btn btn-primary'>Modifier</a><a href='#' class='btn btn-danger'>Supprimer</a></td>";
                                 }
                                 ?>
                             </tbody>

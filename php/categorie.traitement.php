@@ -21,6 +21,8 @@ if (isset($_POST['update'])) {
             </script>";
         }
     }
+} elseif (isset($_POST['gounecategorie'])) {
+    header("Location:../pages/modifcategorie.pages.php?idCategorie={$_POST['gounecategorie']}");
 } elseif (isset($_POST['delete'])) {
     var_dump($_POST['delete']);
     die();

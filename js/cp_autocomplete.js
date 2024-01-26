@@ -4,7 +4,7 @@ function autocomplet_commune() {
     var keyword = $('#cp_client').val();  // cp_client fait référence au champ de recherche puis lancement de la recherche grace ajax_refresh
     if (keyword.length >= min_length) {
         $.ajax({
-            url: '../php/commune.autocomplete.php',
+            url: '../php/cp.autocomplete.php',
             type: 'POST',
             data: { keyword: keyword },
             success: function (data) {
