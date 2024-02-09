@@ -21,6 +21,29 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'fr',
+                themeSystem: 'bootstrap5',
+                height: 570,
+                initialView: 'dayGridWeek',
+                firstDay: 1,
+                events: [{
+                    title: 'Test',
+                    start: '2024-02-06',
+                    end: '2024-02-08'
+                }, {
+                    title: 'Test 2',
+                    start: '2024-02-05',
+                    end: '2024-02-10'
+                }]
+            });
+            calendar.render();
+        });
+    </script>
 </head>
 
 <body>
@@ -34,7 +57,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Page d'administration</h1>
+                <h1>Tableau de bord</h1>
                 <p style='text-align: justify;'>
                     Cette page permet de consulter les données du site (réservations, catégories des locations, tarifs, etc.). Elle ne doit être accessible que par le personnel. Les codes de connexion doivent donc rester confidentiels.
                 </p>
@@ -42,57 +65,20 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                     Vous ne devez, en aucun cas, donner/prêter vos codes de connexion à d'autres personnes. Cela peut être dangereux pour la sécurité de vos données personnelles. Veillez à ce que vos codes soient sauvegardés à l'aide d'un gestionnaire de mot de passes (Exemple : KeePass) et changés régulièrement (consulter la section 'Protection du compte' dans la page de personnalisation du compte d'administrateur).
                 </p>
             </div>
-            <hr>
-            <div class="col-12 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 style="text-align: center;">Catégories</h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="col">ID</th>
-                                    <th class="col">Libellé</th>
-                                    <th class="col">Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $oCategories = new Categorie($con);
-                                $lesCategories = $oCategories->getCategories();
-                                foreach ($lesCategories as $uneCategorie) {
-                                    echo "<tr>";
-                                    echo "<th scope='row'>", $uneCategorie['id_categorie'], "</th>";
-                                    echo "<td>", $uneCategorie['lib_categorie'], "</td>";
-                                    echo "<td>", $uneCategorie['desc_categorie'], "</td>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 style="text-align: center;">Tableau de bord</h3>
-                    </div>
-                    <div class="card-body">
-                        <?php
-                        $oClients = new Client($con);
-                        $oResas = new Reservation($con);
-                        $nombreClients = $oClients->getNombreClients();
-                        $nombreResasJournee = $oResas->getNombreResaDuJour();
-                        echo "Il y a <b>", $nombreClients, "</b> clients enregistrés dans la base de données.";
-                        echo "<hr>";
-                        echo "L'établissement affiche un total de <b>", $nombreResasJournee, "</b> réservations aujourd'hui.";
-                        ?>
-                    </div>
-                </div>
+        </div>
+        <hr>
+    </div>
+    <div class="container">
+        <div class="col">
+            <h1>Réservations</h1>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div id="calendar"></div>
             </div>
         </div>
     </div>
+    <br>
     <?php include("../template/footer.template.php"); ?>
 </body>
 

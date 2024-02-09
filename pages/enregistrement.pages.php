@@ -15,11 +15,15 @@
 </head>
 
 <body>
-    <?php include("../template/header.template.php"); ?>
+    <?php
+    include("../includes/pdo.inc.php");
+    include("../template/header.template.php");
+    include("../class/categories.class.php");
+    ?>
     <div class="container">
         <h1>Réserver</h1>
         <div style="text-align: center;" class="alert alert-primary">
-            Vous souhaitez réserver ? C'est donc ici que cela se passe.
+            MEMO : Créer phrase d'accueil page de réservation
         </div>
         <section id="choixclientele">
             <div class="row">
@@ -50,7 +54,65 @@
         <br>
         <section id="infogroupe">
             <div class="col alert alert-info">
-                Si vous êtes un groupe, vous pouvez nous contacter directement.
+                MEMO : Créer phrase de contact groupe
+            </div>
+        </section>
+        <section id="choixdate">
+            <div class="col alert alert-info">
+                <form action="enregistrement.pages.php" method="post">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="datedebut" class="form-label">Date d'arrivé :</label>
+                            <input type="date" name="datedebut" id="datedebut" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label for="datefin" class="form-label">Date de départ :</label>
+                            <input type="date" name="datefin" id="datefin" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label for="nbrepersonnes" class="form-label">Nombre de personnes (?) :</label>
+                            <input type="number" name="nbrepersonnes" id="nbrepersonnes" min="1" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label for="action" class="form-label">Action :</label>
+                            <input onclick="UI_ConfirmDateResa(event)" type="submit" value="Chosir" name="confirm_date" id="confirm_date" class="btn btn-primary form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section id="choixcategorie">
+            <div class="col alert alert-primary">
+                <form action="">
+                    <?php
+                    var_dump($_POST['datedebut'], $_POST['datefin'], $_POST['nbrepersonnes']);
+                    $oCategories = new Categorie($con);
+                    $lesCategories = $oCategories->getCategories();
+                    ?>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col">Catégorie</th>
+                                <th class="col">Description</th>
+                                <th class="col">Disponibilité</th>
+                                <th class="col">Tarif</th>
+                                <th class="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($lesCategories as $uneCategorie) {
+                                echo "<tr>
+                                <td>", $uneCategorie['lib_categorie'], "</td>
+                                <td>", $uneCategorie['desc_categorie'], "</td>
+                                <td>MEMO : Coder la disponibilité en fonction des dates de résa</td>
+                                <td>MEMO : Coder les tarifs</td>
+                                <td><input class='btn btn-primary' type='submit' value='Sélectionner'>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </form>
             </div>
         </section>
         <section id="formindividuel">
@@ -58,7 +120,7 @@
                 <form action="../php/client.creer.php" method="post">
                     <div class="card">
                         <div class="card-header">
-                            <h5>Pour commencer, remplissez ce formulaire.</h5>
+                            <h5>MEMO : Créer phrase du formulaire</h5>
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
@@ -69,12 +131,6 @@
                                 <div class="col">
                                     <label for="prenom_client" class="form-label">Votre prénom :</label>
                                     <input required="required" type="text" name="prenom_client" id="prenom_client" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col">
-                                    <label for="raison_sociale_client" class="form-label">Votre raison sociale :</label>
-                                    <input type="text" name="raison_sociale_client" id="raison_sociale_client" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">

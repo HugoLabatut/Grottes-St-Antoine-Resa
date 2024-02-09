@@ -43,8 +43,8 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
         <div class="row">
             <div class="col">
                 <div class="card">
-                    <div class="card-body">
-                        <form action="../php/categorie.traitement.php" method="post">
+                    <form action="../php/categorie.modif.php" enctype="multipart/form-data" method="post">
+                        <div class="card-body">
                             <?php
                             $oCategorie = new Categorie($con);
                             $oPhotos = new Photo($con);
@@ -52,6 +52,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                             $lesCategories = $oCategorie->getCategories();
                             $lesPhotos = $oPhotos->getPhotos();
                             $idCategorie = $_GET['idCategorie'];
+                            $lesTarifs = $oTarifs->getTarifByCategorie($idCategorie);
                             if ($idCategorie == NULL) {
                                 echo "<h3>Aucune donnée selectionnée.</h3>";
                             }
@@ -68,61 +69,94 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                     </div>";
 
                                     echo "<div class='form-group'>
-                                    <label class='form-label' for='photos'>Photos :</label>";
+                                    <label class='form-label' for='photos'>Photos :</label><br>";
                                     foreach ($lesPhotos as $unePhoto) {
-                                        var_dump($unePhoto);
+                                        // var_dump($unePhoto);
                                         if ($unePhoto['id_categorie'] == $idCategorie) {
-                                            echo "<img src'../", $unePhoto['lien_photo'], "' width='150'>";
-                                        } else {
-                                            echo "Aucune photo pour cette catégorie.";
+                                            echo "<img src='../", $unePhoto['lien_photo'], "' class='img-thumbnail' width='250' style='margin-right: 1rem;'>";
+                                        } elseif ($unePhoto['id_categorie'] == NULL) {
+                                            echo "<div class='alert alert-primary'>Aucune photo pour cette catégorie.</div>";
                                         }
                                     }
-                                    echo "</div>";
+                                    echo "</div><br>";
 
                                     echo "<div class='form-group'>
                                         <label class='form-label' for='ajoutphoto'>Ajout d'une photo :</label>
                                         <input type='file' accept='.png, .jpg, .jpeg' name='photocategorie' id='photocategorie'     class='form-control'><br>
-                                        <button type='submit' name='update_photo' value='", $uneCategorie['id_categorie'], "' class='btn btn-primary    btn-sm'>Ajouter une photo</button>
+                                        <button type='submit' name='update_photo' value='", $uneCategorie['id_categorie'], "' class='btn btn-primary btn-sm' style='margin-right: 1rem;'>Ajouter une photo</button><button class='btn btn-danger btn-sm'>Supprimer une photo</button>
                                     </div>
                                     <br>";
 
-                                    $leTarif = $oTarifs->getTarifByCategorie($idCategorie);
+                                    echo "<h3>Tableau des tarifs :</h3>
+                                    
+                                    <div class='form-group'>
+                                        <table class='table'>
+                                            <thead>
+                                                <tr>
+                                                    <th class='col'>Libellé</th>
+                                                    <th class='col'>Date de début</th>
+                                                    <th class='col'>Date de fin</th>
+                                                    <th class='col'>Valeur (en €)</th>
+                                                    <th class='col'>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>";
 
-                                    echo "<h3>Tableau des tarifs :</h3>";
-
-                                    if ($leTarif['id_tarif'] == NULL) {
-                                        echo "<div class='form-group'>
-                                        <h5>Aucun tarif n'a été associé pour le moment.</h5>
-                                        </div>";
-                                    } else {
-                                        echo "<div class='form-group'>
-                                            <table class='table'>
-                                                <thead>
-                                                    <tr>
-                                                        <th class='col'>ID</th>
-                                                        <th class='col'>Libellé</th>
-                                                        <th class='col'>Date de début</th>
-                                                        <th class='col'>Date de fin</th>
-                                                        <th class='col'>Valeur</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope='row'>", $leTarif['id_tarif'], "</th>
-                                                        <td>", $leTarif['lib_saisonnalité'], "</td>
-                                                        <td>", $leTarif['date_deb_saisonnalité'], "</td>
-                                                        <td>", $leTarif['date_fin_saisonnalité'], "</td>
-                                                        <td>", $leTarif['valeur_tarif'], " €</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>";
+                                    foreach ($lesTarifs as $unTarif) {
+                                        if ($unTarif['id_categorie'] == $idCategorie) {
+                                            $idt = $unTarif['id_tarif'];
+                                            $libs = 'new_libsaisonnalite' . $idt;
+                                            $ddeb = 'new_datedebsaisonnalite' . $idt;
+                                            $dfin = 'new_datefinsaisonnalite' . $idt;
+                                            $val = 'new_tarif' . $idt;
+                                            echo "<tr>
+                                                <td><input type='text' class='form-control' name='", $libs, "' value='", $unTarif['lib_saisonnalité'], "'></td>
+                                                <td><input class='form-control' type='date' name='", $ddeb, "' value='", $unTarif['date_deb_saisonnalité'], "'></td>
+                                                <td><input class='form-control' type='date' name='", $dfin, "' value='", $unTarif['date_fin_saisonnalité'], "'></td>
+                                                <td><input type='text' style='width: 100px;' class='form-control' name='", $val, "' value='", $unTarif['valeur_tarif'], "'></td>
+                                                <td><button type='submit' name='update_tarif' value='", $unTarif['id_tarif'], "' class='btn btn-primary' style='margin-right: 1rem;'>Modifier le tarif</button><button type='submit' name='delete_tarif' value='", $uneCategorie['id_categorie'], "' class='btn btn-danger'>Supprimer ce tarif</button></td>
+                                            </tr>";
+                                        }
                                     }
+
+                                    echo "</tbody>
+                                        </table>
+                                    </div>
+                                    <div class='alert alert-primary'>
+                                    <h5>Créer un nouveau tarif :</h5>
+                                    <div class='form-group row'>
+                                        <div class='col'>
+                                            <label for='libsaisonnalite'>Libellé du tarif :</label>
+                                            <input type='text' class='form-control' name='libsaisonnalite'>
+                                        </div>
+                                        <div class='col'>
+                                            <label for='valeurtarif'>Valeur du tarif <b>(en €)</b> :</label>
+                                            <input type='text' class='form-control' name='valeurtarif'>
+                                        </div>
+                                    </div>
+                                    <div class='form-group row'>
+                                        <div class='col'>
+                                            <label for='datedebsaisonnalite'>Date de début :</label>
+                                            <input class='form-control' type='date' id='datedebsaisonnalite' name='datedebsaisonnalite'>
+                                        </div>
+                                        <div class='col'>
+                                            <label for='datefinsaisonnalite'>Date de fin :</label>
+                                            <input class='form-control' type='date' id='datefinsaisonnalite' name='datefinsaisonnalite'>
+                                        </div>
+                                    </div>
+                                <br>
+                                <button type='submit' value='", $uneCategorie['id_categorie'], "' name='create_tarif' class='btn btn-primary btn-sm' style='margin-right: 1rem;'>Créer un tarif</button><button type='reset' class='btn btn-danger btn-sm'>Effacer les champs</button>
+                                </div>";
+                            ?>
+                        </div>
+                        <div class="card-footer">
+                    <?php
+                                    echo "<button type='submit' name='update' value='", $uneCategorie['id_categorie'], "' class='btn btn-primary' style='margin-right: 1rem;'>Sauvegarder</button>";
                                 }
                             }
-                            ?>
-                        </form>
-                    </div>
+                    ?>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

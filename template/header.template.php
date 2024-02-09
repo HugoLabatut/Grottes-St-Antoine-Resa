@@ -35,6 +35,11 @@
                     </div>
                     <div class="nav-item">
                         <?php
+                        echo "<a class='nav-link active' href='../pages/chambres.pages.php'>Chambres</a>";
+                        ?>
+                    </div>
+                    <div class="nav-item">
+                        <?php
                         echo "<a class='nav-link active' href='../pages/tarifs.pages.php'>Tarifs</a>";
                         ?>
                     </div>

@@ -28,6 +28,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     include("../template/header.template.php");
     include("../class/categories.class.php");
     ?>
+    <br>
     <div class="container">
         <div class="col">
             <h1>Catégories</h1>

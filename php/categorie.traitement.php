@@ -5,23 +5,7 @@ include("../class/categories.class.php");
 $oCategories = new Categorie($con);
 $lesCategories = $oCategories->getCategories();
 
-if (isset($_POST['update'])) {
-    foreach ($lesCategories as $uneCategorie) {
-        $idc = $uneCategorie['id_categorie'];
-        $nom = 'libcategorie' . $idc;
-        $desc = 'desccategorie' . $idc;
-        if ($idc == $_POST['update']) {
-            $nouvLibCategorie = $_POST[$nom];
-            $nouvDescCategorie = $_POST[$desc];
-            $nouvIdCategorie = $_POST['update'];
-            $oCategories->setCategorieById($nouvIdCategorie, $nouvLibCategorie, $nouvDescCategorie);
-            echo "<script>
-                alert('Les informations ont été mises à jour.');
-                window.location.replace('../pages/categories.pages.php');
-            </script>";
-        }
-    }
-} elseif (isset($_POST['gounecategorie'])) {
+if (isset($_POST['gounecategorie'])) {
     header("Location:../pages/modifcategorie.pages.php?idCategorie={$_POST['gounecategorie']}");
 } elseif (isset($_POST['delete'])) {
     var_dump($_POST['delete']);

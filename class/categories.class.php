@@ -26,6 +26,16 @@ class Categorie
         return $stmt;
     }
 
+    public function getCategorieLibByID($id)
+    {
+        $data = [':idc' => $id];
+        $sql = "SELECT lib_categorie FROM categories WHERE id_categorie = :idc";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['lib_categorie'];
+    }
+
     public function setCategorie($lib, $desc)
     {
         $data = [
