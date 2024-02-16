@@ -25,21 +25,17 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
+            var nbrejours = document.getElementById('nbrejours');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 locale: 'fr',
                 themeSystem: 'bootstrap5',
-                height: 570,
-                initialView: 'dayGridWeek',
+                height: 800,
+                initialView: 'dayGrid',
                 firstDay: 1,
-                events: [{
-                    title: 'Test',
-                    start: '2024-02-06',
-                    end: '2024-02-08'
-                }, {
-                    title: 'Test 2',
-                    start: '2024-02-05',
-                    end: '2024-02-10'
-                }]
+                dayCount: parseInt(nbrejours.value)
+            });
+            nbrejours.addEventListener('change', function() {
+                calendar.setOption('dayCount', parseInt(this.value));
             });
             calendar.render();
         });
@@ -76,7 +72,18 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
             <div class="card-body">
                 <div id="calendar"></div>
             </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        <h5>Personnaliser le nombre de jours à afficher : </h5>
+                    </div>
+                    <div class="col">
+                        <input class="form-control" type="number" name="nbrejours" id="nbrejours" min="5" max="30" value="7">
+                    </div>
+                </div>
+            </div>
         </div>
+        <br>
     </div>
     <br>
     <?php include("../template/footer.template.php"); ?>

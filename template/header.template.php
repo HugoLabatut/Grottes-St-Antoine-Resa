@@ -7,7 +7,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <div class="nav-item">
-                    <a class="nav-link active" href="../pages/enregistrement.pages.php">Réserver</a>
+                    <a class="nav-link active" href="../pages/resa_debut.pages.php">Réserver</a>
                 </div>
                 <div class="nav-item">
                     <a class="nav-link active" href="../pages/gallerie.pages.php">Galerie</a>

@@ -2,15 +2,11 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     // Récupération des id de chaque élément à cacher au chargement de la page
-    enregistrement_formulaire = document.getElementById('formindividuel');
     information_groupe = document.getElementById('infogroupe');
     dates_choix = document.getElementById('choixdate');
-    categories_choix = document.getElementById('choixcategorie');
     // Effacement des éléments à cacher
-    enregistrement_formulaire.style.display = 'none';
     information_groupe.style.display = 'none';
     dates_choix.style.display = 'none';
-    categories_choix.style.display = 'none';
 });
 
 function UI_SelectIndividuelClicked() {
@@ -19,13 +15,6 @@ function UI_SelectIndividuelClicked() {
         information_groupe.style.display = "none";
     } else {
         dates_choix.style.display = "none";
-    }
-}
-
-function UI_ConfirmDateResa(event) {
-    event.preventDefault();
-    if (categories_choix.style.display === "none") {
-        categories_choix.style.display = "block";
     }
 }
 
