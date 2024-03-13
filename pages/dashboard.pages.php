@@ -21,25 +21,14 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../includes/calender/themes/scheduler_8.css">
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var nbrejours = document.getElementById('nbrejours');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                locale: 'fr',
-                themeSystem: 'bootstrap5',
-                height: 800,
-                initialView: 'dayGrid',
-                firstDay: 1,
-                dayCount: parseInt(nbrejours.value)
-            });
-            nbrejours.addEventListener('change', function() {
-                calendar.setOption('dayCount', parseInt(this.value));
-            });
-            calendar.render();
-        });
-    </script>
+    <script src="../includes/calender/js/daypilot/daypilot-all.min.js" type="text/javascript"></script>
+    <style>
+        .scheduler_8_shadow {
+            background-color: blue;
+        }
+    </style>
 </head>
 
 <body>
@@ -70,7 +59,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
         </div>
         <div class="card">
             <div class="card-body">
-                <div id="calendar"></div>
+                <div id="dp"></div>
             </div>
             <div class="card-footer">
                 <div class="row">
@@ -88,5 +77,6 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <br>
     <?php include("../template/footer.template.php"); ?>
 </body>
+<script src="../js/calendrier_resa.js"></script>
 
 </html>

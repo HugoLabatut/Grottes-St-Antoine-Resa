@@ -26,7 +26,12 @@
         </div>
         <section id="enregistrement">
             <div class="col alert alert-primary">
-                <form action="resa.traitement.php" method="post">
+                <form action="../php/resa.traitement.php" method="post">
+                    <?php
+                    echo '<input type="text" name="datedebut" id="datedebut" value="', $_POST['datedebut'], '" hidden="hidden">
+                    <input type="text" name="datefin" id="datefin" value="', $_POST['datefin'], '" hidden="hidden">
+                    <input type="text" name="prixresa" id="prixresa" value="', $_POST['prixresa'], '" hidden="hidden">';
+                    ?>
                     <div class="form-group row">
                         <div class="col">
                             <label for="nom_client" class="form-label">Nom :</label>

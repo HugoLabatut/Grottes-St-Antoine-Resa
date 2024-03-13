@@ -32,4 +32,25 @@ class Reservation
         $stmt->execute();
         return $stmt;
     }
+
+    public function setReservation($idclient)
+    {
+        $data = [
+            ":idclient" => $idclient
+        ];
+        $sql = "INSERT INTO reservations (date_resa, id_client) VALUES (CURDATE(), :idclient)";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+    }
+
+    public function setDateResa($ddeb, $dfin, $idclient, $idresa)
+    {
+        $data = [
+            ":datedebut" => $ddeb,
+            ":datefin" => $dfin,
+            ":idclient" => $idclient,
+            ":idresa" => $idresa
+        ];
+        $sql = "INSERT INTO dater (id_categorie, id_reservation, date_debut_resa, date_fin_resa) VALUES ()";
+    }
 }

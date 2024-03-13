@@ -32,7 +32,7 @@
     $tarifByCategorie = $oTarifs->getTarifByCategorie($_POST['categorie']);
     $unTarif = $tarifByCategorie->fetch(PDO::FETCH_ASSOC);
 
-    $prixresaparjour = $unTarif['valeur_tarif'] * $_POST['nbrepersonnes'];
+    $prixresaparjour = $unTarif['valeur_tarif'];
 
     $datedebut = strtotime($_POST['datedebut']);
     $datefin = strtotime($_POST['datefin']);

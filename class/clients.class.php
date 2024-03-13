@@ -20,8 +20,7 @@ class Client
     public function getClients()
     {
         $sql = "SELECT * FROM clients";
-        $stmt = $this->con->prepare($sql);
-        $stmt->execute();
+        $stmt = $this->con->query($sql);
         return $stmt;
     }
 
