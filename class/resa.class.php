@@ -1,5 +1,7 @@
 <?php
 
+include("chambres.class.php");
+
 class Reservation
 {
     private $con;
@@ -28,8 +30,14 @@ class Reservation
     public function getReservations()
     {
         $sql = "SELECT * FROM reservations";
-        $stmt = $this->con->prepare($sql);
-        $stmt->execute();
+        $stmt = $this->con->query($sql);
+        return $stmt;
+    }
+
+    public function getReservationsDatesByClient()
+    {
+        $sql = "SELECT * FROM dater";
+        $stmt = $this->con->query($sql);
         return $stmt;
     }
 
@@ -43,14 +51,27 @@ class Reservation
         $stmt->execute($data);
     }
 
-    public function setDateResa($ddeb, $dfin, $idclient, $idresa)
+    public function setDateResa($ddeb, $dfin, $idcate, $idresa)
     {
-        $data = [
-            ":datedebut" => $ddeb,
-            ":datefin" => $dfin,
-            ":idclient" => $idclient,
-            ":idresa" => $idresa
-        ];
-        $sql = "INSERT INTO dater (id_categorie, id_reservation, date_debut_resa, date_fin_resa) VALUES ()";
+        $oChambreCate = new Chambre($this->con);
+        $lesChambres = $oChambreCate->getChambreByCategorie($idcate);
+        $i = 0;
+        foreach ($lesChambres as $uneChambre) {
+            while ($uneChambre['etat_resa_chambre'] != 0) {
+                $i++;
+                if ($uneChambre['etat_resa_chambre'] == 0 and $uneChambre['id_categorie'] == $idcate) {
+                    $data = [
+                        ":datedebut" => $ddeb,
+                        ":datefin" => $dfin,
+                        ":idcate" => $idcate,
+                        ":idresa" => $idresa,
+                        ":idcha" => $uneChambre['id_chambre']
+                    ];
+                    $sql = "INSERT INTO dater (id_categorie, id_reservation, id_chambre, date_debut_resa, date_fin_resa) VALUES (:idcate, :idresa, :idcha, :datedebut, :datefin)";
+                    $stmt = $this->con->prepare($sql);
+                    $stmt->execute($data);
+                }
+            }
+        }
     }
 }

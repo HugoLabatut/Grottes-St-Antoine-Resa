@@ -17,7 +17,7 @@
     <?php
     include("../includes/pdo.inc.php");
     include("../template/header.template.php");
-    var_dump($_POST['datedebut'], $_POST['datefin'], $_POST['prixresa']);
+    var_dump($_POST['datedebut'], $_POST['datefin'], $_POST['prixresa'], $_POST['categorie']);
     ?>
     <div class="container">
         <h1>Réserver | Enregistrez votre réservation</h1>
@@ -71,10 +71,12 @@
                     <br>
                     <div class="form-group row">
                         <div class="col">
-                            <input type="submit" value="Enregistrer les informations" class="btn btn-primary form-control">
+                            <?php
+                            echo "<button class='btn btn-primary form-control' name='categorie' value='", $_POST['categorie'], "' type='submit'>Valider mes choix</button>";
+                            ?>
                         </div>
-                        <div class="col">
-                            <input type="resest" value="Effacer les champs" class="btn btn-danger form-control">
+                        <div class=" col">
+                            <input type="reset" value="Effacer les champs" class="btn btn-danger form-control">
                         </div>
                     </div>
                 </form>

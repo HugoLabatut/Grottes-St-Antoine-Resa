@@ -43,4 +43,8 @@ function loadRooms() {
     dp.rows.load("../php/prestations.recuperation.php");
 }
 
+function loadReservations() {
+    dp.events.load("../php/resas.recuperation.php");
+}
+
 dp.init();

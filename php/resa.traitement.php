@@ -13,7 +13,8 @@ var_dump(
     $_POST['ville_client'],
     $_POST['datedebut'],
     $_POST['datefin'],
-    $_POST['prixresa']
+    $_POST['prixresa'],
+    $_POST['categorie']
 );
 
 $oResa = new Reservation($con);
@@ -28,6 +29,7 @@ $cp = $_POST['cp_client'];
 $ville = $_POST['ville_client'];
 $ddeb = $_POST['datedebut'];
 $dfin = $_POST['datefin'];
+$cate = $_POST['categorie'];
 
 $oClient->setClient($nom, $prenom, 'NULL', $mail, $tel, $adresse, $cp, $ville);
 
@@ -39,10 +41,18 @@ $oResa->setReservation($idClient);
 
 $idResa = $con->lastInsertId();
 
-$oResa->setDateResa($ddeb, $dfin, $idClient, $idResa);
+$oResa->setDateResa($ddeb, $dfin, $cate, $idResa);
 
 $lesResa = $oResa->getReservations();
 
+$oChambre = new Chambre($con);
+
+$lesEtatsResaChambres = $oChambre->getChambresByEtatResa(1);
+
 foreach ($lesResa as $uneResa) {
     var_dump($uneResa['id_resa']);
+}
+
+foreach ($lesEtatsResaChambres as $uneChambre) {
+    var_dump($uneChambre['id_chambre'], $uneChambre['etat_resa_chambre']);
 }

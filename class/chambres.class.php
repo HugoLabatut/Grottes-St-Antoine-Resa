@@ -24,6 +24,24 @@ class Chambre
         return $stmt;
     }
 
+    public function getChambreByCategorie($idcat)
+    {
+        $data = [':idcate' => $idcat];
+        $sql = "SELECT * FROM chambres WHERE id_categorie = :idcate";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+        return $stmt;
+    }
+
+    public function getChambresByEtatResa($etat)
+    {
+        $data = [':etat' => $etat];
+        $sql = "SELECT * FROM chambres WHERE etat_resa_chambre = :etat";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+        return $stmt;
+    }
+
     public function setChambre($lib, $idcat)
     {
         $data = [
