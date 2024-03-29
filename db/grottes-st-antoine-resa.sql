@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 16 fév. 2024 à 09:53
+-- Généré le : ven. 29 mars 2024 à 17:16
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -76,6 +76,7 @@ DROP TABLE IF EXISTS `chambres`;
 CREATE TABLE IF NOT EXISTS `chambres` (
   `id_chambre` int NOT NULL AUTO_INCREMENT,
   `lib_chambre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `etat_resa_chambre` tinyint(1) NOT NULL DEFAULT '0',
   `id_categorie` int NOT NULL,
   PRIMARY KEY (`id_chambre`),
   KEY `fk_id_categorie_chambre` (`id_categorie`)
@@ -85,33 +86,33 @@ CREATE TABLE IF NOT EXISTS `chambres` (
 -- Déchargement des données de la table `chambres`
 --
 
-INSERT INTO `chambres` (`id_chambre`, `lib_chambre`, `id_categorie`) VALUES
-(1, 'Chambre 1', 1),
-(2, 'Chambre 2', 1),
-(3, 'Chambre 3', 1),
-(4, 'Chambre 4', 1),
-(5, 'Chambre 5', 1),
-(6, 'Chambre 6', 1),
-(7, 'Chambre 7', 1),
-(8, 'Chambre 8', 1),
-(9, 'Chambre 9', 1),
-(10, 'Chambre 10', 1),
-(11, 'Chambre 11', 1),
-(12, 'Chambre 12', 1),
-(13, 'Chambre 13', 2),
-(14, 'Chambre 14', 2),
-(15, 'Chambre 15', 2),
-(16, 'Chambre 16', 2),
-(17, 'Chambre 17', 2),
-(18, 'Chambre 18', 2),
-(19, 'Chambre 19', 2),
-(20, 'Chambre 20', 2),
-(21, 'Chambre 21', 2),
-(22, 'Chambre 22', 2),
-(23, 'Chambre 23', 2),
-(24, 'Chambre 24', 2),
-(25, 'Chambre 25', 2),
-(26, 'Chambre 26', 3);
+INSERT INTO `chambres` (`id_chambre`, `lib_chambre`, `etat_resa_chambre`, `id_categorie`) VALUES
+(1, 'Chambre 1', 0, 1),
+(2, 'Chambre 2', 0, 1),
+(3, 'Chambre 3', 0, 1),
+(4, 'Chambre 4', 0, 1),
+(5, 'Chambre 5', 0, 1),
+(6, 'Chambre 6', 0, 1),
+(7, 'Chambre 7', 0, 1),
+(8, 'Chambre 8', 0, 1),
+(9, 'Chambre 9', 0, 1),
+(10, 'Chambre 10', 0, 1),
+(11, 'Chambre 11', 0, 1),
+(12, 'Chambre 12', 0, 1),
+(13, 'Chambre 13', 0, 2),
+(14, 'Chambre 14', 0, 2),
+(15, 'Chambre 15', 0, 2),
+(16, 'Chambre 16', 0, 2),
+(17, 'Chambre 17', 0, 2),
+(18, 'Chambre 18', 0, 2),
+(19, 'Chambre 19', 0, 2),
+(20, 'Chambre 20', 0, 2),
+(21, 'Chambre 21', 0, 2),
+(22, 'Chambre 22', 0, 2),
+(23, 'Chambre 23', 0, 2),
+(24, 'Chambre 24', 0, 2),
+(25, 'Chambre 25', 0, 2),
+(26, 'Chambre 26', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -131,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `cp_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `ville_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_client`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `clients`
@@ -139,7 +140,26 @@ CREATE TABLE IF NOT EXISTS `clients` (
 
 INSERT INTO `clients` (`id_client`, `nom_client`, `prenom_client`, `raison_sociale_client`, `mail_client`, `tel_client`, `adresse_client`, `cp_client`, `ville_client`) VALUES
 (1, 'Labatut', 'Hugo', '', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
-(2, 'Paul', 'Jean', '', 'toto@tata.fr', '0102030405', '1 rue du test', '19100', 'Brive-la-Gaillarde');
+(2, 'Paul', 'Jean', '', 'toto@tata.fr', '0102030405', '1 rue du test', '19100', 'Brive-la-Gaillarde'),
+(3, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(4, 'Michel', 'Jean', 'NULL', 'jeanmichel@test.fr', '0102030405', '1 rue du test', '75017', 'Paris 17'),
+(5, 'Michel', 'Jean', 'NULL', 'jeanmichel@test.fr', '0102030405', '1 rue du test', '75017', 'Paris 17'),
+(6, 'Dupont', 'Albert', 'NULL', 'dupontalber19@hotmail.com', '0708091011', '41 bis avenue Edmond Michelet', '19100', 'Brive-la-Gaillarde'),
+(7, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(8, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(9, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(10, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(11, '', '', 'NULL', '', '', '', '', ''),
+(12, '', '', 'NULL', '', '', '', '', ''),
+(13, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(14, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(15, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(16, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(17, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(18, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(19, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(20, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(21, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac');
 
 -- --------------------------------------------------------
 
@@ -39427,6 +39447,24 @@ INSERT INTO `communes` (`id_commune`, `code_insee_commune`, `nom_postal_commune`
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `dater`
+--
+
+DROP TABLE IF EXISTS `dater`;
+CREATE TABLE IF NOT EXISTS `dater` (
+  `id_chambre` int NOT NULL,
+  `id_resa` int NOT NULL,
+  `id_categorie` int NOT NULL,
+  `date_debut_resa` date NOT NULL,
+  `date_fin_resa` date NOT NULL,
+  KEY `fk_id_chambre_dater` (`id_chambre`),
+  KEY `fk_id_categorie_dater` (`id_categorie`),
+  KEY `fk_id_resa_dater` (`id_resa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `factures`
 --
 
@@ -39480,7 +39518,30 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   `id_client` int NOT NULL,
   PRIMARY KEY (`id_resa`),
   KEY `fk_id_client` (`id_client`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `reservations`
+--
+
+INSERT INTO `reservations` (`id_resa`, `date_resa`, `val_arrhes_resa`, `date_vers_arrhes_resa`, `id_client`) VALUES
+(1, '2024-02-23', 0, '0000-00-00', 5),
+(2, '2024-02-23', 0, '0000-00-00', 6),
+(3, '2024-03-28', 0, '0000-00-00', 7),
+(4, '2024-03-28', 0, '0000-00-00', 8),
+(5, '2024-03-28', 0, '0000-00-00', 9),
+(6, '2024-03-28', 0, '0000-00-00', 10),
+(7, '2024-03-28', 0, '0000-00-00', 11),
+(8, '2024-03-28', 0, '0000-00-00', 12),
+(9, '2024-03-28', 0, '0000-00-00', 13),
+(10, '2024-03-28', 0, '0000-00-00', 14),
+(11, '2024-03-28', 0, '0000-00-00', 15),
+(12, '2024-03-28', 0, '0000-00-00', 16),
+(13, '2024-03-28', 0, '0000-00-00', 17),
+(14, '2024-03-28', 0, '0000-00-00', 18),
+(15, '2024-03-28', 0, '0000-00-00', 19),
+(16, '2024-03-28', 0, '0000-00-00', 20),
+(17, '2024-03-28', 0, '0000-00-00', 21);
 
 -- --------------------------------------------------------
 
@@ -39522,6 +39583,14 @@ INSERT INTO `tarifs` (`id_tarif`, `lib_saisonnalité`, `date_deb_saisonnalité`,
 --
 ALTER TABLE `chambres`
   ADD CONSTRAINT `fk_id_categorie_chambre` FOREIGN KEY (`id_categorie`) REFERENCES `categories` (`id_categorie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Contraintes pour la table `dater`
+--
+ALTER TABLE `dater`
+  ADD CONSTRAINT `fk_id_categorie_dater` FOREIGN KEY (`id_categorie`) REFERENCES `categories` (`id_categorie`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_id_chambre_dater` FOREIGN KEY (`id_chambre`) REFERENCES `chambres` (`id_chambre`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_id_resa_dater` FOREIGN KEY (`id_resa`) REFERENCES `reservations` (`id_resa`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `factures`
