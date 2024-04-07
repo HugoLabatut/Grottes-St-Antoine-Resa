@@ -24,13 +24,14 @@ class Chambre
         return $stmt;
     }
 
-    public function getChambreByCategorie($idcat)
+    public function getChambresByCategorie($idcat)
     {
         $data = [':idcate' => $idcat];
-        $sql = "SELECT * FROM chambres WHERE id_categorie = :idcate";
+        $sql = "SELECT id_chambre FROM chambres WHERE id_categorie = :idcate";
         $stmt = $this->con->prepare($sql);
         $stmt->execute($data);
-        return $stmt;
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $row;
     }
 
     public function getChambresByEtatResa($etat)

@@ -2,7 +2,9 @@
 include("../includes/pdo.inc.php");
 include("../class/resa.class.php");
 include("../class/clients.class.php");
+// include("../class/chambres.class.php");
 
+/*
 var_dump(
     $_POST['nom_client'],
     $_POST['prenom_client'],
@@ -16,6 +18,9 @@ var_dump(
     $_POST['prixresa'],
     $_POST['categorie']
 );
+*/
+
+echo "Début !";
 
 $oResa = new Reservation($con);
 $oClient = new Client($con);
@@ -41,14 +46,25 @@ $oResa->setReservation($idClient);
 
 $idResa = $con->lastInsertId();
 
-$oResa->setDateResa($ddeb, $dfin, $cate, $idResa);
-
-$lesResa = $oResa->getReservations();
-
 $oChambre = new Chambre($con);
 
-$lesEtatsResaChambres = $oChambre->getChambresByEtatResa(1);
+$boolChambres = $oResa->verifDispoChambres($ddeb, $dfin, $cate);
 
+$chambreReservee = $oResa->getChambreReservee($idResa);
+
+$lesChambres = $oChambre->getChambres();
+
+if ($boolChambres == true) {
+    foreach ($lesChambres as $uneChambre) {
+        if ($uneChambre['id_chambre'] != $chambreReservee) {
+            
+        }
+    }
+}
+
+// $lesResa = $oResa->getReservations();
+
+/*
 foreach ($lesResa as $uneResa) {
     var_dump($uneResa['id_resa']);
 }
@@ -56,3 +72,4 @@ foreach ($lesResa as $uneResa) {
 foreach ($lesEtatsResaChambres as $uneChambre) {
     var_dump($uneChambre['id_chambre'], $uneChambre['etat_resa_chambre']);
 }
+*/

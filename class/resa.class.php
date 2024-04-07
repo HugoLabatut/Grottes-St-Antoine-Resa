@@ -41,6 +41,36 @@ class Reservation
         return $stmt;
     }
 
+    public function getChambreReservee($idresa)
+    {
+        $data = [':idresa' => $idresa];
+        $sql = "SELECT id_resa FROM dater WHERE id_resa = :idresa";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row;
+    }
+
+    public function verifDispoChambres($ddeb, $dfin, $idcate)
+    {
+        $boolVerif = false;
+        $data = [
+            ":ddeb" => $ddeb,
+            ":dfin" => $dfin,
+            ":idcate" => $idcate
+        ];
+        $sql = "SELECT id_chambre FROM dater WHERE date_debut_resa = :ddeb AND date_fin_resa = :dfin AND id_categorie = :idcate";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row == NULL) {
+            $boolVerif = true;
+        } else {
+            $boolVerif = false;
+        }
+        return $boolVerif;
+    }
+
     public function setReservation($idclient)
     {
         $data = [
@@ -51,27 +81,17 @@ class Reservation
         $stmt->execute($data);
     }
 
-    public function setDateResa($ddeb, $dfin, $idcate, $idresa)
+    public function setDateResa($idch, $ddeb, $dfin, $idcate, $idresa)
     {
-        $oChambreCate = new Chambre($this->con);
-        $lesChambres = $oChambreCate->getChambreByCategorie($idcate);
-        $i = 0;
-        foreach ($lesChambres as $uneChambre) {
-            while ($uneChambre['etat_resa_chambre'] != 0) {
-                $i++;
-                if ($uneChambre['etat_resa_chambre'] == 0 and $uneChambre['id_categorie'] == $idcate) {
-                    $data = [
-                        ":datedebut" => $ddeb,
-                        ":datefin" => $dfin,
-                        ":idcate" => $idcate,
-                        ":idresa" => $idresa,
-                        ":idcha" => $uneChambre['id_chambre']
-                    ];
-                    $sql = "INSERT INTO dater (id_categorie, id_reservation, id_chambre, date_debut_resa, date_fin_resa) VALUES (:idcate, :idresa, :idcha, :datedebut, :datefin)";
-                    $stmt = $this->con->prepare($sql);
-                    $stmt->execute($data);
-                }
-            }
-        }
+        $data = [
+            ":idchambre" => $idch,
+            ":idresa" => $idresa,
+            ":idcate" => $idcate,
+            ":ddeb" => $ddeb,
+            ":dfin" => $dfin
+        ];
+        $sql = "INSERT INTO dater VALUES (:idchambre, :idresa, :idcate, :ddeb, :dfin)";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
     }
 }
