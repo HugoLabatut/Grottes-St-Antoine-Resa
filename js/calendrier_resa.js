@@ -25,7 +25,7 @@ dp.bubble = new DayPilot.Bubble({
 
         // simulating slow server-side load
         setTimeout(function () {
-            args.html = "<div style='font-weight:bold'>" + ev.text() + "</div><div>Start: " + ev.start().toString("MM/dd/yyyy HH:mm") + "</div><div>End: " + ev.end().toString("MM/dd/yyyy HH:mm") + "</div><div>Id: " + ev.id() + "</div>";
+            args.html = "<div style='font-weight:bold'>" + ev.text() + "</div><div>Start: " + ev.start().toString("MM/dd/yyyy") + "</div><div>End: " + ev.end().toString("MM/dd/yyyy") + "</div><div>Id: " + ev.id() + "</div>";
             args.loaded();
         }, 500);
 

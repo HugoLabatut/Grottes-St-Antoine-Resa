@@ -34,13 +34,14 @@ class Chambre
         return $row;
     }
 
-    public function getChambresByEtatResa($etat)
+    public function getChambresByDispoAndCategorie($idcate)
     {
-        $data = [':etat' => $etat];
-        $sql = "SELECT * FROM chambres WHERE etat_resa_chambre = :etat";
+        $data = [":idcate" => $idcate];
+        $sql = "SELECT * FROM chambres WHERE etat_resa_chambre = 0 AND id_categorie = :idcate";
         $stmt = $this->con->prepare($sql);
         $stmt->execute($data);
-        return $stmt;
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $row;
     }
 
     public function setChambre($lib, $idcat)
@@ -50,6 +51,14 @@ class Chambre
             ":idcategorie" => $idcat
         ];
         $sql = "INSERT INTO chambres (lib_chambre, id_categorie) VALUES (:libelle, :idcategorie)";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+    }
+
+    public function setChambreIndispo($idch)
+    {
+        $data = [":idchambre" => $idch];
+        $sql = "UPDATE chambres SET etat_resa_chambre = 1 WHERE id_chambre = :idchambre";
         $stmt = $this->con->prepare($sql);
         $stmt->execute($data);
     }

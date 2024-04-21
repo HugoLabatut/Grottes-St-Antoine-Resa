@@ -2,25 +2,8 @@
 include("../includes/pdo.inc.php");
 include("../class/resa.class.php");
 include("../class/clients.class.php");
-// include("../class/chambres.class.php");
 
-/*
-var_dump(
-    $_POST['nom_client'],
-    $_POST['prenom_client'],
-    $_POST['mail_client'],
-    $_POST['tel_client'],
-    $_POST['adresse_client'],
-    $_POST['cp_client'],
-    $_POST['ville_client'],
-    $_POST['datedebut'],
-    $_POST['datefin'],
-    $_POST['prixresa'],
-    $_POST['categorie']
-);
-*/
-
-echo "Début !";
+echo "Début !<br>";
 
 $oResa = new Reservation($con);
 $oClient = new Client($con);
@@ -48,28 +31,17 @@ $idResa = $con->lastInsertId();
 
 $oChambre = new Chambre($con);
 
-$boolChambres = $oResa->verifDispoChambres($ddeb, $dfin, $cate);
+$chambresDispos = $oChambre->getChambresByDispoAndCategorie($cate);
 
-$chambreReservee = $oResa->getChambreReservee($idResa);
+echo "ID catégorie = ", $cate, "<br>";
 
-$lesChambres = $oChambre->getChambres();
+$i = 0;
 
-if ($boolChambres == true) {
-    foreach ($lesChambres as $uneChambre) {
-        if ($uneChambre['id_chambre'] != $chambreReservee) {
-            
-        }
+foreach ($chambresDispos as $uneChambre) {
+    $i++;
+    if ($i == 1) {
+        echo "ID = ", $uneChambre['id_chambre'], " Lib = ", $uneChambre['lib_chambre'], "<br>";
+        $oResa->setDateResa($uneChambre['id_chambre'], $ddeb, $dfin, $cate, $idResa);
+        $oChambre->setChambreIndispo($uneChambre['id_chambre']);
     }
 }
-
-// $lesResa = $oResa->getReservations();
-
-/*
-foreach ($lesResa as $uneResa) {
-    var_dump($uneResa['id_resa']);
-}
-
-foreach ($lesEtatsResaChambres as $uneChambre) {
-    var_dump($uneChambre['id_chambre'], $uneChambre['etat_resa_chambre']);
-}
-*/

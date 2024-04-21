@@ -1,21 +1,24 @@
 <?php
-
 include("../includes/pdo.inc.php");
 include("../class/resa.class.php");
 
-/*
-$start = $_GET['start'];
-$end = $_GET['end'];
-*/
+date_default_timezone_set("UTC");
+$now = new DateTime("now");
+$today = $now->setTime(0, 0, 0);
 
 $oResas = new Reservation($con);
+$json = file_get_contents('php://input');
+$params = json_decode($json);
 
-$stmt = $oResas->getReservationsDatesByClient();
+$stmt = $oResas->getReservationsDates();
 $lesResas = $stmt->fetchAll();
 
 foreach ($lesResas as $uneResa) {
     $dataResas = [
-        "id_resa" => $uneResa['id_resa'],
+        "id" => $uneResa['id_resa'],
+        "start" => $uneResa['date_debut_resa'],
+        "end" => $uneResa['date_fin_resa'],
+        "resource" => $uneResa['id_chambre']
     ];
     $result[] = $dataResas;
 }
