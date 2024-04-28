@@ -70,6 +70,18 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                         <input class="form-control" type="number" name="nbrejours" id="nbrejours" min="5" max="30" value="7">
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <h5>Date minimale :</h5>
+                    </div>
+                    <div class="col">
+                        <input type="date" name="datemin" id="datemin" class="form-control">
+                    </div>
+                    <div class="col">
+                        <button id="modifaffichage" class="btn btn-primary" onclick="getDatesAffichage()">Consulter ces dates</button>
+                    </div>
+                </div>
             </div>
         </div>
         <br>

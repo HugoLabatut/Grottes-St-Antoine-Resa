@@ -4,9 +4,23 @@ var dp = new DayPilot.Scheduler("dp");
 dp.theme = "scheduler_8";
 dp.cellWidth = 40;
 
+dp.locale = "fr-fr"
+
+var inputNbreJours = document.getElementById('nbrejours');
+var dateMini = document.getElementById('datemin');
+
 // view
-dp.startDate = new DayPilot.Date.today().firstDayOfMonth();
-dp.days = dp.startDate.daysInMonth();
+dp.startDate = DayPilot.Date.today();
+dp.days = 7;
+inputNbreJours.addEventListener('change', function() {
+    dp.days = parseInt(inputNbreJours.value);
+    dp.update();
+});
+function getDatesAffichage() {
+    alert(dateMini.value);
+    dp.startDate = dateMini.value;
+    dp.update();
+}
 dp.scale = "Day";
 dp.timeHeaders = [{
     groupBy: "Month"
@@ -47,4 +61,11 @@ function loadReservations() {
     dp.events.load("../php/resas.recuperation.php");
 }
 
+dp.onEventClick = function (args) {
+    DayPilot.Modal.alert("Cliqué : " + args.e.id());
+}
+
+loadReservations();
+
 dp.init();
+
