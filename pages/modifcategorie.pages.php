@@ -20,7 +20,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <title>Modifier une catégorie - Grottes de Saint-Antoine</title>
+    <title>Modifier une catégorie - Grottes de St Antoine</title>
 </head>
 
 <body>

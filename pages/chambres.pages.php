@@ -16,7 +16,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chambres - Grottes de Saint-Antoine</title>
+    <title>Chambres - Grottes de St Antoine</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -35,7 +35,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <br>
     <div class="container">
         <div class="col">
-            <h1>Préstations</h1>
+            <h1>Prestations</h1>
         </div>
         <div class="row">
             <div class="col-12 col-lg-9">
@@ -83,12 +83,12 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
             <div class="col-12 col-lg-3">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Créer une préstation</h3>
+                        <h3>Créer une prestation</h3>
                     </div>
                     <form action="../php/chambre.traitement.php" method="post">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="lib_chambre" class="form-label">Libellé de la préstation : </label>
+                                <label for="lib_chambre" class="form-label">Libellé de la prestation : </label>
                                 <input type="text" name="lib_chambre" id="lib_chambre" class="form-control">
                             </div>
                             <div class="form-group">

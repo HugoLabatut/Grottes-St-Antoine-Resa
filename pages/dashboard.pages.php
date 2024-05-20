@@ -1,5 +1,6 @@
 <?php
 include("../includes/pdo.inc.php");
+include("../includes/update_chambres.inc.php");
 session_start();
 if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     echo "<script>
@@ -16,17 +17,16 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord - Grottes de Saint-Antoine</title>
+    <title>Tableau de bord - Grottes de St Antoine</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../includes/calender/themes/scheduler_8.css">
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
     <script src="../includes/calender/js/daypilot/daypilot-all.min.js" type="text/javascript"></script>
     <style>
         .scheduler_8_shadow {
-            background-color: blue;
+            background-color: lightgray;
         }
     </style>
 </head>
@@ -73,7 +73,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                 <br>
                 <div class="row">
                     <div class="col">
-                        <h5>Date minimale :</h5>
+                        <h5>Date de début calendrier :</h5>
                     </div>
                     <div class="col">
                         <input type="date" name="datemin" id="datemin" class="form-control">
@@ -82,8 +82,20 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                         <button id="modifaffichage" class="btn btn-primary" onclick="getDatesAffichage()">Consulter ces dates</button>
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <h5>Demande de réservation d'un groupe ?</h5>
+                    </div>
+                    <div class="col">
+                        <a href="resagroupe.pages.php" class="btn btn-primary">Créer une réservation pour un groupe</a>
+                    </div>
+                </div>
             </div>
         </div>
+        <br>
+        <form class="card" id="info-client" method="post">
+        </form>
         <br>
     </div>
     <br>

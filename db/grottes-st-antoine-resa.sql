@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 29 mars 2024 à 17:16
+-- Généré le : lun. 20 mai 2024 à 11:10
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -40,7 +40,23 @@ CREATE TABLE IF NOT EXISTS `administrateur` (
 --
 
 INSERT INTO `administrateur` (`id_admin`, `nom_admin`, `mdp_admin`) VALUES
-(1, 'root', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+(1, 'root', '5b04e55f69acdd6f1450d2a93016e3dbf30ce4d3');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `bar`
+--
+
+DROP TABLE IF EXISTS `bar`;
+CREATE TABLE IF NOT EXISTS `bar` (
+  `id_bar` int NOT NULL AUTO_INCREMENT,
+  `lib_bar` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `date_debut_bar` date NOT NULL,
+  `date_fin_bar` date NOT NULL,
+  `pourcentage_bar` int NOT NULL,
+  PRIMARY KEY (`id_bar`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -132,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `cp_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `ville_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_client`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `clients`
@@ -159,7 +175,15 @@ INSERT INTO `clients` (`id_client`, `nom_client`, `prenom_client`, `raison_socia
 (18, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
 (19, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
 (20, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
-(21, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac');
+(21, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(22, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(23, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(24, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(25, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(26, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(27, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(28, 'Michel', 'Jean', 'NULL', 'tyy@test.fr', '0102030405', '1 rue de la paix', '19100', 'Brive-la-Gaillarde'),
+(29, 'Dupont', 'François', 'NULL', 'francois.dupont75@hotmail.com', '0605040302', '1 place de la république', '75008', 'Paris 08');
 
 -- --------------------------------------------------------
 
@@ -39462,6 +39486,16 @@ CREATE TABLE IF NOT EXISTS `dater` (
   KEY `fk_id_resa_dater` (`id_resa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `dater`
+--
+
+INSERT INTO `dater` (`id_chambre`, `id_resa`, `id_categorie`, `date_debut_resa`, `date_fin_resa`) VALUES
+(14, 22, 2, '2024-04-15', '2024-04-22'),
+(15, 23, 2, '2024-05-03', '2024-05-07'),
+(26, 24, 3, '2024-05-04', '2024-05-09'),
+(1, 25, 1, '2024-05-09', '2024-05-16');
+
 -- --------------------------------------------------------
 
 --
@@ -39518,7 +39552,7 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   `id_client` int NOT NULL,
   PRIMARY KEY (`id_resa`),
   KEY `fk_id_client` (`id_client`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `reservations`
@@ -39541,7 +39575,15 @@ INSERT INTO `reservations` (`id_resa`, `date_resa`, `val_arrhes_resa`, `date_ver
 (14, '2024-03-28', 0, '0000-00-00', 18),
 (15, '2024-03-28', 0, '0000-00-00', 19),
 (16, '2024-03-28', 0, '0000-00-00', 20),
-(17, '2024-03-28', 0, '0000-00-00', 21);
+(17, '2024-03-28', 0, '0000-00-00', 21),
+(18, '2024-04-08', 0, '0000-00-00', 22),
+(19, '2024-04-08', 0, '0000-00-00', 23),
+(20, '2024-04-11', 0, '0000-00-00', 24),
+(21, '2024-04-11', 0, '0000-00-00', 25),
+(22, '2024-04-11', 0, '0000-00-00', 26),
+(23, '2024-05-01', 0, '0000-00-00', 27),
+(24, '2024-05-01', 0, '0000-00-00', 28),
+(25, '2024-05-02', 0, '0000-00-00', 29);
 
 -- --------------------------------------------------------
 

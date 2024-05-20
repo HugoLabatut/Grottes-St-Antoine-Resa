@@ -16,7 +16,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier une chambre - Grottes de Saint-Antoine</title>
+    <title>Modifier une chambre - Grottes de St Antoine</title>
 </head>
 
 <body>

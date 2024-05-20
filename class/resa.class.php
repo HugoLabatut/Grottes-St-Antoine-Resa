@@ -1,6 +1,6 @@
 <?php
 
-include("chambres.class.php");
+// include("chambres.class.php");
 
 class Reservation
 {

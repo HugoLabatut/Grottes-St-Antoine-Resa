@@ -55,12 +55,18 @@ class Chambre
         $stmt->execute($data);
     }
 
-    public function setChambreIndispo($idch)
+    public function setChambreIndispo()
     {
-        $data = [":idchambre" => $idch];
-        $sql = "UPDATE chambres SET etat_resa_chambre = 1 WHERE id_chambre = :idchambre";
+        $sql = "UPDATE chambres, dater SET chambres.etat_resa_chambre = 1 WHERE dater.date_debut_resa = CURDATE()";
         $stmt = $this->con->prepare($sql);
-        $stmt->execute($data);
+        $stmt->execute();
+    }
+
+    public function setChambreDispo()
+    {
+        $sql = "UPDATE chambres, dater SET chambres.etat_resa_chambre = 0 WHERE dater.date_fin_resa = CURDATE()";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute();
     }
 
     public function setChambreByID($idc, $lib, $idcat)

@@ -17,7 +17,6 @@
     <?php
     include("../includes/pdo.inc.php");
     include("../template/header.template.php");
-    var_dump($_POST['datedebut'], $_POST['datefin'], $_POST['prixresa'], $_POST['categorie']);
     ?>
     <div class="container">
         <h1>Réserver | Enregistrez votre réservation</h1>
@@ -83,6 +82,7 @@
             </div>
         </section>
     </div>
+    <?php include("../template/footer.template.php"); ?>
 </body>
 
 </html>

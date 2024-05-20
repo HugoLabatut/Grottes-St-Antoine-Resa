@@ -24,6 +24,19 @@ class Client
         return $stmt;
     }
 
+    public function getClientByReservation($idresa)
+    {
+        $data = [":idresa" => $idresa];
+        $sql = "SELECT c.nom_client, c.prenom_client FROM clients AS c 
+        INNER JOIN reservations AS r ON r.id_client = c.id_client
+        INNER JOIN dater AS d ON d.id_resa = r.id_resa
+        WHERE r.id_resa = :idresa";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['nom_client']." ".$row['prenom_client'];
+    }
+
     public function setClient($n, $p, $rs, $mail, $tel, $adr, $cp, $vil)
     {
         $data = [

@@ -1,5 +1,6 @@
 <?php
 include("../includes/pdo.inc.php");
+include("../includes/update_chambres.inc.php");
 include("../class/resa.class.php");
 include("../class/clients.class.php");
 
@@ -45,3 +46,9 @@ foreach ($chambresDispos as $uneChambre) {
         $oChambre->setChambreIndispo($uneChambre['id_chambre']);
     }
 }
+?>
+
+<script>
+    alert("Votre réservation a été enregistrée. Vous receverez un courriel pour la facturation.");
+    window.location.replace("../index.php");
+</script>

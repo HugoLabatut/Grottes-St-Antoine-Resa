@@ -64,6 +64,7 @@
             </div>
         </section>
     </div>
+    <?php include("../template/footer.template.php"); ?>
 </body>
 
 </html>

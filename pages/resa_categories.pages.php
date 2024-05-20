@@ -27,7 +27,6 @@
         <section id="choixcategorie">
             <div class="col alert alert-primary">
                 <?php
-                var_dump($_POST['datedebut'], $_POST['datefin'], $_POST['nbrepersonnes']);
                 $oCategories = new Categorie($con);
                 $oTarifs = new Tarif($con);
                 $lesCategories = $oCategories->getCategories();
@@ -51,7 +50,7 @@
                                 echo "<tr>
                                 <td>", $uneCategorie['lib_categorie'], "</td>
                                 <td>", $uneCategorie['desc_categorie'], "</td>
-                                <td>", $unTarif['valeur_tarif']," €</td>
+                                <td>", $unTarif['valeur_tarif'], " €</td>
                                 <td hidden='hidden'><input type='text' hidden='hidden' value='", $_POST['datedebut'], "' name='datedebut'></td>
                                 <td hidden='hidden'><input type='text' hidden='hidden' value='", $_POST['datefin'], "' name='datefin'></td>
                                 <td hidden='hidden'><input type='text' hidden='hidden' value='", $_POST['nbrepersonnes'], "' name='nbrepersonnes'></td>
@@ -65,6 +64,7 @@
             </div>
         </section>
     </div>
+    <?php include("../template/footer.template.php"); ?>
 </body>
 
 </html>

@@ -12,7 +12,7 @@ var dateMini = document.getElementById('datemin');
 // view
 dp.startDate = DayPilot.Date.today();
 dp.days = 7;
-inputNbreJours.addEventListener('change', function() {
+inputNbreJours.addEventListener('change', function () {
     dp.days = parseInt(inputNbreJours.value);
     dp.update();
 });
@@ -62,7 +62,31 @@ function loadReservations() {
 }
 
 dp.onEventClick = function (args) {
-    DayPilot.Modal.alert("Cliqué : " + args.e.id());
+    var idResa = args.e.id();
+    var nomClient = args.e.text();
+    var ddeb = args.e.start();
+    var dfin = args.e.end();
+    drawInfoClient(idResa, nomClient, ddeb, dfin);
+}
+
+function dateFormat(dateString) {
+    var date = new Date(dateString);
+    var annee = date.getFullYear();
+    var mois = (date.getMonth() + 1).toString().padStart(2, '0');
+    var jour = date.getDate().toString().padStart(2, '0');
+    return annee + "-" + mois + "-" + jour;
+}
+
+function drawInfoClient(idresa, nomclient, ddeb, dfin) {
+    var infoClient = document.getElementById("info-client");
+    var datedebut = dateFormat(ddeb);
+    var datefin = dateFormat(dfin);
+    var cardBody = "<div class='card-body'><p>ID de la réservation : " + idresa + "</p>" +
+        "<p>Nom et prénom du client : <b>" + nomclient + "</b></p>" +
+        "<input type='text' hidden='hidden' value='" + nomclient + "'></input>" +
+        "<p>Date de début : <input class='form-control' type='date' id='ddeb' name='ddeb' value='" + datedebut + "'></input></p>" +
+        "<p>Date de fin : <input class='form-control' type='date' id='dfin' name='ddeb' value='" + datefin + "'></input></p></div>";
+    infoClient.innerHTML = cardBody;
 }
 
 loadReservations();

@@ -37,6 +37,15 @@ class Administrateur
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['mdp_admin'];
     }
+
+    public function setAdminNouvMDP($nom_admin, $nouv_mdp)
+    {
+        $nouv_mdp_hache = sha1($nouv_mdp);
+        $data = [":nouvmdp" => $nouv_mdp_hache, ":nomadmin" => $nom_admin];
+        $sql = "UPDATE administrateur SET mdp_admin = :nouvmdp WHERE nom_admin = :nomadmin";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+    }
 }
 
 ?>
