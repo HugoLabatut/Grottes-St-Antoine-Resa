@@ -44,11 +44,6 @@
                     </div>
                     <div class="nav-item">
                         <?php
-                        echo "<a class='nav-link active' href='http://localhost/grottes-st-antoine-resa/pages/tarifs.pages.php'>Tarifs</a>";
-                        ?>
-                    </div>
-                    <div class="nav-item">
-                        <?php
                         echo "<a class='nav-link active' href='http://localhost/grottes-st-antoine-resa/pages/bar.pages.php'>BAR</a>";
                         ?>
                     </div>

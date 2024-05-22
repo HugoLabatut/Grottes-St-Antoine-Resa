@@ -11,7 +11,7 @@ class BAR
 
     public function getBAR()
     {
-        $sql = "SELECT id_bar, substr(date_debut_bar, 0, 7), substr(date_fin_bar, 0, 7), pourcentage_bar FROM bar";
+        $sql = "SELECT id_bar, lib_bar, date_debut_bar, date_fin_bar, pourcentage_bar FROM bar";
         $stmt = $this->con->query($sql);
         return $stmt;
     }
@@ -22,7 +22,7 @@ class BAR
             ":ddeb" => $ddeb,
             ":dfin" => $dfin
         ];
-        $sql = "SELECT * FROM bar WHERE date_debut_bar = :ddeb AND date_fin_bar = :dfin";
+        $sql = "SELECT DATE_FORMAT(date_debut_bar, '%d-%m'), DATE_FORMAT(date_fin_bar, '%d-%m') FROM bar WHERE DATE_FORMAT(date_debut_bar, '%d-%m') = DATE_FORMAT(:ddeb, '%d-%m') AND DATE_FORMAT(date_fin_bar, '%d-%m') = DATE_FORMAT(:dfin, '%d-%m')";
         $stmt = $this->con->prepare($sql);
         $stmt->execute($data);
     }

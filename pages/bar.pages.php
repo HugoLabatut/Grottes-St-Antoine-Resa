@@ -33,7 +33,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
         <div class="col">
             <h1>BAR</h1>
             <p style="text-align: justify;">
-                Fixer les BAR (Best Available Rate) par période pour que les tarifs puissent s'adapter en fonction des saisons.
+                Fixer les BAR (Best Available Rate) par période pour que les tarifs puissent s'adapter en fonction des saisons. Les années dans les dates de début et les dates de fin ne sont pas prises en compte par le système.
             </p>
         </div>
         <hr>
@@ -51,7 +51,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                         <th class='col'>Libellé</th>
                                         <th class='col'>Date début</th>
                                         <th class='col'>Date fin</th>
-                                        <th class='col'>Pourcentage</th>
+                                        <th class='col'>Pourcentage (%)</th>
                                         <th class="col">Actions</th>
                                     </tr>
                                 </thead>
@@ -60,12 +60,18 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                     $oBAR = new BAR($con);
                                     $lesBAR = $oBAR->getBAR();
                                     foreach ($lesBAR as $uneBAR) {
+                                        $idbar = $uneBAR['id_bar'];
+                                        $libbar = 'nouv_libelle' . $idbar;
+                                        $ddebbar = 'nouv_ddeb' . $idbar;
+                                        $dfinbar = 'nouv_dfin' . $idbar;
+                                        $pctbar = 'nouv_pct' . $idbar;
+                                        $pctbar_nondecimal = $uneBAR['pourcentage_bar'] * 100;
                                         echo "<tr>
                                         <th scope='row'>", $uneBAR['id_bar'], "</th>
-                                        <td>", $uneBAR['lib_bar'], "</td>
-                                        <td>", $uneBAR['date_debut_bar'], "</td>
-                                        <td>", $uneBAR['date_fin_bar'], "</td>
-                                        <td>", $uneBAR['pourcentage_bar'], "</td>
+                                        <td><input type='text' class='form-control' name='", $libbar, "' id='lib_bar' value='", $uneBAR['lib_bar'], "'></td>
+                                        <td><input type='date' class='form-control' name='", $ddebbar, "' id='lib_bar' value='", $uneBAR['date_debut_bar'], "'></td>
+                                        <td><input type='date' class='form-control' name='", $dfinbar, "' id='lib_bar' value='", $uneBAR['date_fin_bar'], "'></td>
+                                        <td><input type='text' class='form-control' name='", $pctbar, "' id='lib_bar' value='", $pctbar_nondecimal, "'></td>
                                         <td><button class='btn btn-primary' name='gounebar' value='", $uneBAR['id_bar'], "' type='submit'>Modifier</button> <button class='btn btn-danger' name='delete' value='", $uneBAR['id_bar'], "' type='submit'>Supprimer</button></td>
                                         </tr>";
                                     }
@@ -96,7 +102,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                 <input type="date" name="dfinbar" id="dfinbar" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="pctbar" class="form-label">Pourcentage :</label>
+                                <label for="pctbar" class="form-label">Pourcentage (%) :</label>
                                 <input type="text" name="pctbar" id="pctbar" class="form-control">
                             </div>
                         </div>
