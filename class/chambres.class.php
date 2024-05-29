@@ -62,6 +62,35 @@ class Chambre
         $stmt->execute();
     }
 
+    public function setChambreByResa($idresa, $idcategorie, $ddeb, $dfin)
+    {
+        $data = [":idresa" => $idresa, ":idcategorie"=> $idcategorie, ":ddeb" => $ddeb, ":dfin" => $dfin];
+        $sql = "SELECT MAX(id_chambre) AS max_id FROM dater WHERE id_categorie = :idcategorie";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute([":idcategorie" => $idcategorie]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $last_id_chambre = $row["max_id"];
+        $new_id_chambre = $last_id_chambre + 1;
+        $sql2 = "INSERT INTO dater (id_chambre, id_resa, id_categorie, date_debut_resa, date_fin_resa) VALUES (:newidchambre, :idresa, :idcategorie, :ddeb, :dfin)";
+        $stmt2 = $this->con->prepare($sql2);
+        $params = [
+            ":newidchambre" => $new_id_chambre,
+            ":idresa" => $idresa, 
+            ":idcategorie"=> $idcategorie, 
+            ":ddeb" => $ddeb, 
+            ":dfin" => $dfin
+        ];
+        $stmt2->execute($params);
+    }
+
+    public function setChambreIndispoByID($idc)
+    {
+        $data = [":idchambre" => $idc];
+        $sql = "UPDATE chambres SET etat_resa_chambre = 1 WHERE id_chambre = :idchambre";
+        $stmt = $this->con->prepare($sql);
+        $stmt->execute($data);
+    }
+
     public function setChambreDispo()
     {
         $sql = "UPDATE chambres, dater SET chambres.etat_resa_chambre = 0 WHERE dater.date_fin_resa = CURDATE()";

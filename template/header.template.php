@@ -14,7 +14,7 @@
                     <a class="nav-link active" href="http://localhost/grottes-st-antoine-resa/pages/resa_debut.pages.php">Réserver</a>
                 </div>
                 <div class="nav-item">
-                    <a class="nav-link active" href="http://localhost/grottes-st-antoine-resa/pages/gallerie.pages.php">Galerie</a>
+                    <a class="nav-link active" href="http://localhost/grottes-st-antoine-resa/pages/galerie.pages.php">Galerie</a>
                 </div>
                 <?php if (isset($_SESSION['nom_admin']) and isset($_SESSION['mdp_admin'])) { ?>
                     <div class="nav-item">

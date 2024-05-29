@@ -21,6 +21,15 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/footer.css">
     <title>Modifier une catégorie - Grottes de St Antoine</title>
+    <style>
+        .img-thumbnail {
+            cursor: pointer;
+        }
+
+        .selected {
+            border: 3px solid blue;
+        }
+    </style>
 </head>
 
 <body>
@@ -29,6 +38,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     include("../class/categories.class.php");
     include("../class/photos.class.php");
     include("../class/tarifs.class.php");
+    include("../class/bar.class.php");
     if ($_GET['idCategorie'] == NULL) {
         echo "<script>
                 alert('Vous devez choisir une catégorie à modifier pour pouvoir accéder à cette page.');
@@ -49,10 +59,12 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                             $oCategorie = new Categorie($con);
                             $oPhotos = new Photo($con);
                             $oTarifs = new Tarif($con);
+                            $oBar = new BAR($con);
                             $lesCategories = $oCategorie->getCategories();
                             $lesPhotos = $oPhotos->getPhotos();
                             $idCategorie = $_GET['idCategorie'];
                             $lesTarifs = $oTarifs->getTarifByCategorie($idCategorie);
+                            $lesBAR = $oBar->getBAR();
                             if ($idCategorie == NULL) {
                                 echo "<h3>Aucune donnée selectionnée.</h3>";
                             }
@@ -69,11 +81,13 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                     </div>";
 
                                     echo "<div class='form-group'>
+                                    <label class='form-label' for='photo'>Photo sélectionnée :</label><br>
+                                    <img id='large-image' class='img-thumbnail' src='../res/img/noimage_selected.png' alt='Cliquez sur une miniature pour afficher la photo en grand' class='img-fluid' style='width: 800px;'><br>
                                     <label class='form-label' for='photos'>Photos :</label><br>";
                                     foreach ($lesPhotos as $unePhoto) {
                                         // var_dump($unePhoto);
                                         if ($unePhoto['id_categorie'] == $idCategorie) {
-                                            echo "<img src='../", $unePhoto['lien_photo'], "' class='img-thumbnail' width='250' style='margin-right: 1rem;'>";
+                                            echo "<img src='../", $unePhoto['lien_photo'], "' id='miniatures' class='img-thumbnail' onclick='displayLargePhoto(\"../", $unePhoto['lien_photo'],"\"); displaySelectedPhoto();' width='250' style='margin-right: 1rem;' data-id='", $unePhoto['id_photo'],"'>";
                                         } elseif ($unePhoto['id_categorie'] == NULL) {
                                             echo "<div class='alert alert-primary'>Aucune photo pour cette catégorie.</div>";
                                         }
@@ -82,8 +96,8 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
 
                                     echo "<div class='form-group'>
                                         <label class='form-label' for='ajoutphoto'>Ajout d'une photo :</label>
-                                        <input type='file' accept='.png, .jpg, .jpeg' name='photocategorie' id='photocategorie'     class='form-control'><br>
-                                        <button type='submit' name='update_photo' value='", $uneCategorie['id_categorie'], "' class='btn btn-primary btn-sm' style='margin-right: 1rem;'>Ajouter une photo</button><button class='btn btn-danger btn-sm'>Supprimer une photo</button>
+                                        <input type='file' accept='.png, .jpg, .jpeg' name='photocategorie' id='photocategorie' class='form-control'><br>
+                                        <button type='submit' name='update_photo' value='", $uneCategorie['id_categorie'], "' class='btn btn-primary btn-sm' style='margin-right: 1rem;'>Ajouter une photo</button>
                                     </div>
                                     <br>";
 
@@ -93,10 +107,8 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                         <table class='table'>
                                             <thead>
                                                 <tr>
-                                                    <th class='col'>Libellé</th>
-                                                    <th class='col'>Date de début</th>
-                                                    <th class='col'>Date de fin</th>
                                                     <th class='col'>Valeur (en €)</th>
+                                                    <th class='col'>BAR</th>
                                                     <th class='col'>Actions</th>
                                                 </tr>
                                             </thead>
@@ -105,17 +117,24 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                     foreach ($lesTarifs as $unTarif) {
                                         if ($unTarif['id_categorie'] == $idCategorie) {
                                             $idt = $unTarif['id_tarif'];
-                                            $libs = 'new_libsaisonnalite' . $idt;
-                                            $ddeb = 'new_datedebsaisonnalite' . $idt;
-                                            $dfin = 'new_datefinsaisonnalite' . $idt;
                                             $val = 'new_tarif' . $idt;
+                                            $bar = 'new_bar' . $idt;
                                             echo "<tr>
-                                                <td><input type='text' class='form-control' name='", $libs, "' value='", $unTarif['lib_saisonnalité'], "'></td>
-                                                <td><input class='form-control' type='date' name='", $ddeb, "' value='", $unTarif['date_deb_saisonnalité'], "'></td>
-                                                <td><input class='form-control' type='date' name='", $dfin, "' value='", $unTarif['date_fin_saisonnalité'], "'></td>
-                                                <td><input type='text' style='width: 100px;' class='form-control' name='", $val, "' value='", $unTarif['valeur_tarif'], "'></td>
-                                                <td><button type='submit' name='update_tarif' value='", $unTarif['id_tarif'], "' class='btn btn-primary' style='margin-right: 1rem;'>Modifier le tarif</button><button type='submit' name='delete_tarif' value='", $uneCategorie['id_categorie'], "' class='btn btn-danger'>Supprimer ce tarif</button></td>
+                                                <td><input type='text' style='width: 100px;' class='form-control' name='", $val, "' value='", $unTarif['valeur_tarif'], "'></td>";
+                                            foreach ($lesBAR as $uneBAR) {
+                                                if ($unTarif['id_bar'] == $uneBAR['id_bar']) {
+                                                    $pctbar_nondecimal = $uneBAR['pourcentage_bar'] * 100;
+                                                    echo "<td>
+                                                    <input type='text' class='form-control' onkeyup='bar_autocomplete()' id='lib_bar' name='", $bar, "' value='", $uneBAR['lib_bar'], "'>
+                                                    <input class='form-control' hidden='hidden' type='text' id='id_bar' name='", $bar, "'>
+                                                    <ul class='list-group' id='listebar'></ul>
+                                                    </td>";
+                                                }
+                                            }
+                                            echo "<td><button type='submit' name='update_tarif' value='", $unTarif['id_tarif'], "' class='btn btn-primary' style='margin-right: 1rem;'>Modifier le tarif</button><button type='submit' name='delete_tarif' value='", $uneCategorie['id_categorie'], "' class='btn btn-danger'>Supprimer ce tarif</button></td>
                                             </tr>";
+                                        } else {
+                                            echo "<tr><td><p>Aucune donnée.</p></td></tr>";
                                         }
                                     }
 
@@ -126,22 +145,16 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                     <h5>Créer un nouveau tarif :</h5>
                                     <div class='form-group row'>
                                         <div class='col'>
-                                            <label for='libsaisonnalite'>Libellé du tarif :</label>
-                                            <input type='text' class='form-control' name='libsaisonnalite'>
-                                        </div>
-                                        <div class='col'>
                                             <label for='valeurtarif'>Valeur du tarif <b>(en €)</b> :</label>
                                             <input type='text' class='form-control' name='valeurtarif'>
                                         </div>
                                     </div>
                                     <div class='form-group row'>
                                         <div class='col'>
-                                            <label for='datedebsaisonnalite'>Date de début :</label>
-                                            <input class='form-control' type='date' id='datedebsaisonnalite' name='datedebsaisonnalite'>
-                                        </div>
-                                        <div class='col'>
-                                            <label for='datefinsaisonnalite'>Date de fin :</label>
-                                            <input class='form-control' type='date' id='datefinsaisonnalite' name='datefinsaisonnalite'>
+                                            <label for='bar'>BAR :</label>
+                                            <input class='form-control' type='text' onkeyup='bar_autocomplete()' id='lib_bar' name='lib_bar'>
+                                            <input class='form-control' hidden='hidden' type='text' id='id_bar' name='id_bar'>
+                                            <ul class='list-group' id='listebar'></ul>
                                         </div>
                                     </div>
                                 <br>
@@ -150,17 +163,22 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                             ?>
                         </div>
                         <div class="card-footer">
-                    <?php
+                        <?php
                                     echo "<button type='submit' name='update' value='", $uneCategorie['id_categorie'], "' class='btn btn-primary' style='margin-right: 1rem;'>Sauvegarder</button>";
                                 }
                             }
-                    ?>
+                        ?>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script src="../js/bar_autocomplete.js"></script>
+    <script src="../js/photo_large.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>

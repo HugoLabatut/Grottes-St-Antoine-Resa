@@ -25,16 +25,14 @@ class Tarif
         return $stmt;
     }
 
-    public function setTarif($lib, $datedeb, $datefin, $valeur, $idcat)
+    public function setTarif($valeur, $idcat, $idbar)
     {
         $data = [
-            ":lib" => $lib,
-            ":datedeb" => $datedeb,
-            ":datefin" => $datefin,
             ":valeur" => $valeur,
-            ":idcat" => $idcat
+            ":idcat" => $idcat,
+            ":idbar" => $idbar
         ];
-        $sql = "INSERT INTO tarifs (lib_saisonnalité, date_deb_saisonnalité, date_fin_saisonnalité, valeur_tarif, id_categorie) VALUES (:lib, :datedeb, :datefin, :valeur, :idcat)";
+        $sql = "INSERT INTO tarifs (valeur_tarif, id_categorie, id_bar) VALUES (:valeur, :idcat, :idbar)";
         $stmt = $this->con->prepare($sql);
         $stmt->execute($data);
     }
@@ -48,16 +46,14 @@ class Tarif
         return $row;
     }
 
-    public function editTarif($idt, $lib, $ddeb, $dfin, $val)
+    public function editTarif($idt, $idbar, $val)
     {
         $data = [
             ":idtarif" => $idt,
-            ":libsaison" => $lib,
-            ":ddebsaison" => $ddeb,
-            ":dfinsaison" => $dfin,
+            ":idbar" => $idbar,
             ":valeurtarif" => $val
         ];
-        $sql = "UPDATE tarifs SET lib_saisonnalité = :libsaison, date_deb_saisonnalité = :ddebsaison, date_fin_saisonnalité = :dfinsaison, valeur_tarif = :valeurtarif WHERE id_tarif = :idtarif";
+        $sql = "UPDATE tarifs SET valeur_tarif = :valeurtarif, id_bar = :idbar WHERE id_tarif = :idtarif";
         $stmt = $this->con->prepare($sql);
         $stmt->execute($data);
     }

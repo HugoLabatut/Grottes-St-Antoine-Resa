@@ -16,29 +16,24 @@ if (isset($_POST['update'])) {
     $oCategories->setCategorieById($idc, $lib, $desc);
     header("location:../pages/categories.pages.php");
 } elseif (isset($_POST['create_tarif'])) {
-    $lib = $_POST['libsaisonnalite'];
-    $datedeb = $_POST['datedebsaisonnalite'];
-    $datefin = $_POST['datefinsaisonnalite'];
     $valeur = $_POST['valeurtarif'];
     $idc = $_POST['create_tarif'];
+    $bar = $_POST['id_bar'];
     $oTarif = new Tarif($con);
-    $oTarif->setTarif($lib, $datedeb, $datefin, $valeur, $idc);
+    $oTarif->setTarif($valeur, $idc, $bar);
     header("location:../pages/modifcategorie.pages.php?idCategorie={$idc}");
 } elseif (isset($_POST['update_tarif'])) {
     $oTarifs = new Tarif($con);
     $lesTarifs = $oTarifs->getTarifs();
     foreach ($lesTarifs as $unTarif) {
         $idt = $unTarif['id_tarif'];
-        $lib = 'new_libsaisonnalite' . $idt;
-        $datedeb = 'new_datedebsaisonnalite' . $idt;
-        $datefin = 'new_datefinsaisonnalite' . $idt;
         $valeur = 'new_tarif' . $idt;
+        $bar = 'new_bar' . $idt;
         if ($idt == $_POST['update_tarif']) {
             $nouvlib = $_POST[$lib];
-            $nouvddeb = $_POST[$datedeb];
-            $nouvdfin = $_POST[$datefin];
             $nouvval = $_POST[$valeur];
-            $oTarifs->editTarif($idt, $nouvlib, $nouvddeb, $nouvdfin, $nouvval);
+            $nouvbar = $_POST[$bar];
+            $oTarifs->editTarif($idt, $nouvbar, $nouvval);
         }
     }
     header("location:../pages/modifcategorie.pages.php?idCategorie={$_POST['update_tarif']}");

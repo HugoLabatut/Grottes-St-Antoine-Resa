@@ -22,9 +22,11 @@
     include("../template/header.template.php");
     include("../class/categories.class.php");
     include("../class/tarifs.class.php");
+    include("../class/bar.class.php");
 
     $oCategorie = new Categorie($con);
     $oTarifs = new Tarif($con);
+    $oBAR = new BAR($con);
 
     $categorieByID = $oCategorie->getCategorieByID($_POST['categorie']);
     $laCategorie = $categorieByID->fetch(PDO::FETCH_ASSOC);
@@ -32,10 +34,15 @@
     $tarifByCategorie = $oTarifs->getTarifByCategorie($_POST['categorie']);
     $unTarif = $tarifByCategorie->fetch(PDO::FETCH_ASSOC);
 
-    $prixresaparjour = $unTarif['valeur_tarif'];
+    $BARByID = $oBAR->getBARByID($unTarif['id_bar']);
+    $uneBAR = $BARByID->fetch(PDO::FETCH_ASSOC);
 
     $datedebut = strtotime($_POST['datedebut']);
     $datefin = strtotime($_POST['datefin']);
+
+    $prixresaparjour_decimal = $unTarif['valeur_tarif'] * $uneBAR['pourcentage_bar'];
+
+    $prixresaparjour = round($prixresaparjour_decimal, 2);
 
     $nbrejoursTimestamp = $datefin - $datedebut;
 
@@ -72,10 +79,12 @@
                     <label class='form-label' for='nbrepersonnes'>Nombre de personnes :</label>
                     <input class='form-control' type='number' min='1' value='", $_POST['nbrepersonnes'], "'>
                     </div>
+                    <!--
                     <div class='col'>
                     <label class='form-label' for='changer'>Vous avez modifier quelque chose ?</label>
                     <button name='backToCategories' class='btn btn-primary form-control'>Modifier les informations</button>
                     </div>
+                    -->
                     </div>
                     <hr>
                     <div class='form-group row'>
@@ -88,10 +97,12 @@
                     <label class='form-label' for='datedebut'>Tarif par jour et par personne :</label>
                     <p class='form-control'>", $unTarif['valeur_tarif'], " €</p>
                     </div>
+                    <!--
                     <div class='col'>
                     <label class='form-label' for='changer'>Ce choix ne vous convient pas ?</label>
                     <button name='backToCategories' class='btn btn-primary form-control'>Changer la catégorie</button>
                     </div>
+                    -->
                     </div>
                     <hr>
                     <div class='form-group row'>
@@ -101,8 +112,14 @@
                     <h2 style='text-align: center;'><b>", $prixresatotal, " € </b>pour ", $nbrejours, " jours.</h2>
                     <input type='text' name='prixresa' value='", $prixresatotal, "' hidden='hidden'>
                     <br>
+                    </div>
+                    </div>
+                    <div class='form-group row'>
+                    <div class='col'>
                     <button class='btn btn-primary form-control' name='categorie' value='", $laCategorie['id_categorie'], "' type='submit'>Valider mes choix</button>
                     </div>
+                    <div class='col'>
+                    <button class='btn btn-danger form-control'>Retour au début</button>
                     </div>";
                     ?>
                 </form>

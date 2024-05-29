@@ -70,7 +70,7 @@
                             <input type="date" name="datefin" id="datefin" class="form-control">
                         </div>
                         <div class="col">
-                            <label for="nbrepersonnes" class="form-label">Nombre de personnes (?) :</label>
+                            <label for="nbrepersonnes" class="form-label">Nombre de personnes :</label>
                             <input type="number" name="nbrepersonnes" id="nbrepersonnes" min="1" class="form-control">
                         </div>
                         <div class="col">

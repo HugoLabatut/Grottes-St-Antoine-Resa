@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 20 mai 2024 à 11:10
+-- Généré le : mer. 29 mai 2024 à 14:54
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `grottes-st-antoine-resa`
+-- Base de données : `grottes-saint-antoine-resa`
 --
 
 -- --------------------------------------------------------
@@ -30,8 +30,8 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `administrateur`;
 CREATE TABLE IF NOT EXISTS `administrateur` (
   `id_admin` int NOT NULL AUTO_INCREMENT,
-  `nom_admin` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `mdp_admin` text COLLATE utf8mb4_general_ci NOT NULL,
+  `nom_admin` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `mdp_admin` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_admin`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -51,12 +51,20 @@ INSERT INTO `administrateur` (`id_admin`, `nom_admin`, `mdp_admin`) VALUES
 DROP TABLE IF EXISTS `bar`;
 CREATE TABLE IF NOT EXISTS `bar` (
   `id_bar` int NOT NULL AUTO_INCREMENT,
-  `lib_bar` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `lib_bar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `date_debut_bar` date NOT NULL,
   `date_fin_bar` date NOT NULL,
-  `pourcentage_bar` int NOT NULL,
+  `pourcentage_bar` float NOT NULL,
   PRIMARY KEY (`id_bar`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `bar`
+--
+
+INSERT INTO `bar` (`id_bar`, `lib_bar`, `date_debut_bar`, `date_fin_bar`, `pourcentage_bar`) VALUES
+(1, 'Haute saison', '2024-05-01', '2024-09-01', 1.2),
+(2, 'Basse saison', '2024-09-01', '2024-05-01', 0.9);
 
 -- --------------------------------------------------------
 
@@ -67,8 +75,8 @@ CREATE TABLE IF NOT EXISTS `bar` (
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id_categorie` int NOT NULL AUTO_INCREMENT,
-  `lib_categorie` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `desc_categorie` text COLLATE utf8mb4_general_ci NOT NULL,
+  `lib_categorie` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `desc_categorie` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_categorie`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -91,7 +99,7 @@ INSERT INTO `categories` (`id_categorie`, `lib_categorie`, `desc_categorie`) VAL
 DROP TABLE IF EXISTS `chambres`;
 CREATE TABLE IF NOT EXISTS `chambres` (
   `id_chambre` int NOT NULL AUTO_INCREMENT,
-  `lib_chambre` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `lib_chambre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `etat_resa_chambre` tinyint(1) NOT NULL DEFAULT '0',
   `id_categorie` int NOT NULL,
   PRIMARY KEY (`id_chambre`),
@@ -115,7 +123,7 @@ INSERT INTO `chambres` (`id_chambre`, `lib_chambre`, `etat_resa_chambre`, `id_ca
 (10, 'Chambre 10', 0, 1),
 (11, 'Chambre 11', 0, 1),
 (12, 'Chambre 12', 0, 1),
-(13, 'Chambre 13', 0, 2),
+(13, 'Chambre 13', 1, 2),
 (14, 'Chambre 14', 0, 2),
 (15, 'Chambre 15', 0, 2),
 (16, 'Chambre 16', 0, 2),
@@ -139,16 +147,16 @@ INSERT INTO `chambres` (`id_chambre`, `lib_chambre`, `etat_resa_chambre`, `id_ca
 DROP TABLE IF EXISTS `clients`;
 CREATE TABLE IF NOT EXISTS `clients` (
   `id_client` int NOT NULL AUTO_INCREMENT,
-  `nom_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `prenom_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `nom_client` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `prenom_client` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `raison_sociale_client` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `mail_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `tel_client` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
-  `adresse_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `cp_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `ville_client` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `mail_client` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `tel_client` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `adresse_client` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cp_client` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ville_client` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_client`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `clients`
@@ -183,7 +191,14 @@ INSERT INTO `clients` (`id_client`, `nom_client`, `prenom_client`, `raison_socia
 (26, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
 (27, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
 (28, 'Michel', 'Jean', 'NULL', 'tyy@test.fr', '0102030405', '1 rue de la paix', '19100', 'Brive-la-Gaillarde'),
-(29, 'Dupont', 'François', 'NULL', 'francois.dupont75@hotmail.com', '0605040302', '1 place de la république', '75008', 'Paris 08');
+(29, 'Dupont', 'François', 'NULL', 'francois.dupont75@hotmail.com', '0605040302', '1 place de la république', '75008', 'Paris 08'),
+(30, 'Patrick', 'Jean', 'NULL', 'jpatrick15@yahoo.com', '0108070605', '41 avenue de la République', '33100', 'Bordeaux'),
+(31, 'Test', 'Test', 'Test', 'Test@test.com', '0108070605', '1 rue du test', '24290', 'Montignac'),
+(32, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '24290', 'Montignac'),
+(33, 'Michel', 'Jean', 'NULL', 'jm@orange.fr', '0605040302', '1 place de la République', '13100', 'Aix-en-Provence'),
+(34, 'Charles', 'Olivier', 'NULL', 'olivcharlo@gmail.com', '0102030405', 'lieu-dit Le Chemin', '13200', 'Arles'),
+(35, 'Lerat', 'Jean-Louis', 'NULL', 'jl-lerat15@hotmail.com', '0203040506', '1 rue de la paix', '75002', 'Paris 02'),
+(36, 'Labatut', 'Hugo', 'NULL', 'hugo.labatut24@protonmail.com', '0783746369', '21 chemin des peupliers', '19100', 'Brive-la-Gaillarde');
 
 -- --------------------------------------------------------
 
@@ -194,12 +209,12 @@ INSERT INTO `clients` (`id_client`, `nom_client`, `prenom_client`, `raison_socia
 DROP TABLE IF EXISTS `communes`;
 CREATE TABLE IF NOT EXISTS `communes` (
   `id_commune` int NOT NULL AUTO_INCREMENT,
-  `code_insee_commune` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `nom_postal_commune` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `cp_commune` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `nom_complet_commune` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `code_dep_commune` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `nom_dep_commune` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `code_insee_commune` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nom_postal_commune` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `cp_commune` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nom_complet_commune` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `code_dep_commune` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nom_dep_commune` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id_commune`)
 ) ENGINE=InnoDB AUTO_INCREMENT=39202 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -39494,7 +39509,13 @@ INSERT INTO `dater` (`id_chambre`, `id_resa`, `id_categorie`, `date_debut_resa`,
 (14, 22, 2, '2024-04-15', '2024-04-22'),
 (15, 23, 2, '2024-05-03', '2024-05-07'),
 (26, 24, 3, '2024-05-04', '2024-05-09'),
-(1, 25, 1, '2024-05-09', '2024-05-16');
+(1, 25, 1, '2024-05-09', '2024-05-16'),
+(1, 26, 1, '2024-06-01', '2024-06-08'),
+(13, 28, 2, '2024-05-31', '2024-06-03'),
+(13, 29, 2, '2024-06-01', '2024-06-04'),
+(13, 30, 2, '2024-06-02', '2024-06-06'),
+(13, 31, 2, '2024-06-01', '2024-06-08'),
+(16, 32, 2, '2024-06-01', '2024-06-08');
 
 -- --------------------------------------------------------
 
@@ -39521,12 +39542,12 @@ CREATE TABLE IF NOT EXISTS `factures` (
 DROP TABLE IF EXISTS `photos`;
 CREATE TABLE IF NOT EXISTS `photos` (
   `id_photo` int NOT NULL AUTO_INCREMENT,
-  `nom_photo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `lien_photo` text COLLATE utf8mb4_general_ci NOT NULL,
+  `nom_photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `lien_photo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `id_categorie` int NOT NULL,
   PRIMARY KEY (`id_photo`),
   KEY `fk_id_categorie_photo` (`id_categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `photos`
@@ -39534,8 +39555,8 @@ CREATE TABLE IF NOT EXISTS `photos` (
 
 INSERT INTO `photos` (`id_photo`, `nom_photo`, `lien_photo`, `id_categorie`) VALUES
 (1, 'Partie Administration Réservation.png', 'res/img/Partie Administration Réservation.png', 1),
-(2, 'Partie Client Chambre.png', 'res/img/Partie Client Chambre.png', 1),
-(3, 'Partie Client Réservation.png', 'res/img/Partie Client Réservation.png', 1);
+(3, 'Partie Client Réservation.png', 'res/img/Partie Client Réservation.png', 1),
+(4, 'photo_4.png', 'res/img/photo_4.png', 1);
 
 -- --------------------------------------------------------
 
@@ -39552,7 +39573,7 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   `id_client` int NOT NULL,
   PRIMARY KEY (`id_resa`),
   KEY `fk_id_client` (`id_client`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `reservations`
@@ -39583,7 +39604,14 @@ INSERT INTO `reservations` (`id_resa`, `date_resa`, `val_arrhes_resa`, `date_ver
 (22, '2024-04-11', 0, '0000-00-00', 26),
 (23, '2024-05-01', 0, '0000-00-00', 27),
 (24, '2024-05-01', 0, '0000-00-00', 28),
-(25, '2024-05-02', 0, '0000-00-00', 29);
+(25, '2024-05-02', 0, '0000-00-00', 29),
+(26, '2024-05-29', 0, '0000-00-00', 30),
+(27, '2024-05-29', 0, '0000-00-00', 31),
+(28, '2024-05-29', 0, '0000-00-00', 32),
+(29, '2024-05-29', 0, '0000-00-00', 33),
+(30, '2024-05-29', 0, '0000-00-00', 34),
+(31, '2024-05-29', 0, '0000-00-00', 35),
+(32, '2024-05-29', 0, '0000-00-00', 36);
 
 -- --------------------------------------------------------
 
@@ -39594,27 +39622,23 @@ INSERT INTO `reservations` (`id_resa`, `date_resa`, `val_arrhes_resa`, `date_ver
 DROP TABLE IF EXISTS `tarifs`;
 CREATE TABLE IF NOT EXISTS `tarifs` (
   `id_tarif` int NOT NULL AUTO_INCREMENT,
-  `lib_saisonnalité` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `date_deb_saisonnalité` date NOT NULL,
-  `date_fin_saisonnalité` date NOT NULL,
   `valeur_tarif` float NOT NULL,
   `id_categorie` int NOT NULL,
+  `id_bar` int NOT NULL,
   PRIMARY KEY (`id_tarif`),
-  KEY `fk_id_categorie_tarif` (`id_categorie`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `fk_id_categorie_tarif` (`id_categorie`),
+  KEY `fk_id_bar_tarif` (`id_bar`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `tarifs`
 --
 
-INSERT INTO `tarifs` (`id_tarif`, `lib_saisonnalité`, `date_deb_saisonnalité`, `date_fin_saisonnalité`, `valeur_tarif`, `id_categorie`) VALUES
-(1, 'TestSaison', '2024-02-01', '2024-02-29', 10.15, 1),
-(2, 'Test tarif chambre 1000 (modifié)', '2024-01-29', '2024-02-29', 21.99, 2),
-(3, 'Autre test tarif chambre 1000', '2024-03-01', '2024-04-30', 24.99, 2),
-(4, 'Encore un test tarif chambre 1000', '2024-04-01', '2024-05-01', 19.99, 2),
-(5, 'UnTestSaison Autre', '2024-03-29', '2024-05-29', 15.5, 1),
-(6, 'TestSaisonCategorie3', '2024-02-13', '2024-02-29', 20.99, 3),
-(7, 'UnTarifBiddonPourLa4', '2024-02-13', '2024-02-29', 25.99, 4);
+INSERT INTO `tarifs` (`id_tarif`, `valeur_tarif`, `id_categorie`, `id_bar`) VALUES
+(1, 19.99, 1, 1),
+(2, 24.99, 2, 2),
+(3, 24.99, 3, 2),
+(5, 30.99, 4, 1);
 
 --
 -- Contraintes pour les tables déchargées
@@ -39656,6 +39680,7 @@ ALTER TABLE `reservations`
 -- Contraintes pour la table `tarifs`
 --
 ALTER TABLE `tarifs`
+  ADD CONSTRAINT `fk_id_bar_tarif` FOREIGN KEY (`id_bar`) REFERENCES `bar` (`id_bar`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_id_categorie_tarif` FOREIGN KEY (`id_categorie`) REFERENCES `categories` (`id_categorie`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 

@@ -18,10 +18,12 @@
     include("../class/categories.class.php");
     include("../class/photos.class.php");
     include("../class/tarifs.class.php");
+    include("../class/bar.class.php");
 
     $oCategorie = new Categorie($con);
     $oPhotos = new Photo($con);
     $oTarifs = new Tarif($con);
+    $oBAR = new BAR($con);
 
     $lesPhotos = $oPhotos->getLienPhotoByCategorie($_POST['categorie']);
 
@@ -30,6 +32,15 @@
 
     $tarifByCategorie = $oTarifs->getTarifByCategorie($_POST['categorie']);
     $unTarif = $tarifByCategorie->fetch(PDO::FETCH_ASSOC);
+
+    $BARByID = $oBAR->getBARByID($unTarif['id_bar']);
+    $uneBAR = $BARByID->fetch(PDO::FETCH_ASSOC);
+
+    // var_dump($uneBAR, $uneBAR['pourcentage_bar']);
+
+    $pct_bar = $uneBAR['pourcentage_bar'];
+
+    $tarifSaison = $unTarif['valeur_tarif'] * $pct_bar;
     // var_dump($_POST['categorie'], $_POST['datedebut'], $_POST['datefin'], $_POST['nbrepersonnes'], $laCategorie);
     ?>
     <div class="container">
@@ -47,12 +58,10 @@
                     foreach ($lesPhotos as $unePhoto) {
                         echo "<img src='../", $unePhoto['lien_photo'], "' class='img-thumbnail' width='250' style='margin-right: 1rem;'>";
                     }
-                    ?>
-                    <?php
                     echo "<h5 style='margin-top: 1rem;'>Description :</h5>
                     <p class='alert alert-light'>", $laCategorie['desc_categorie'], "</p>
                     <h4 style='margin-top: 1rem; text-align: center;'>Tarif :</h4>
-                    <h2 style='text-align: center;'><b>", $unTarif['valeur_tarif'], "* €</b> par jour et par personne</h2>
+                    <h2 style='text-align: center;'><b>", round($tarifSaison, 2), "* €</b> par jour et par personne</h2>
                     <p><i>*Les prix peuvent varier selon les saisons</i></p>
                     <input type='text' hidden='hidden' value='", $_POST['datedebut'], "' name='datedebut'>
                     <input type='text' hidden='hidden' value='", $_POST['datefin'], "' name='datefin'>

@@ -69,10 +69,10 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                                         echo "<tr>
                                         <th scope='row'>", $uneBAR['id_bar'], "</th>
                                         <td><input type='text' class='form-control' name='", $libbar, "' id='lib_bar' value='", $uneBAR['lib_bar'], "'></td>
-                                        <td><input type='date' class='form-control' name='", $ddebbar, "' id='lib_bar' value='", $uneBAR['date_debut_bar'], "'></td>
-                                        <td><input type='date' class='form-control' name='", $dfinbar, "' id='lib_bar' value='", $uneBAR['date_fin_bar'], "'></td>
-                                        <td><input type='text' class='form-control' name='", $pctbar, "' id='lib_bar' value='", $pctbar_nondecimal, "'></td>
-                                        <td><button class='btn btn-primary' name='gounebar' value='", $uneBAR['id_bar'], "' type='submit'>Modifier</button> <button class='btn btn-danger' name='delete' value='", $uneBAR['id_bar'], "' type='submit'>Supprimer</button></td>
+                                        <td><input type='date' class='form-control' name='", $ddebbar, "' id='ddeb_bar' value='", $uneBAR['date_debut_bar'], "'></td>
+                                        <td><input type='date' class='form-control' name='", $dfinbar, "' id='dfin_bar' value='", $uneBAR['date_fin_bar'], "'></td>
+                                        <td><input type='text' class='form-control' name='", $pctbar, "' id='pct_bar' value='", $pctbar_nondecimal, "'></td>
+                                        <td><button class='btn btn-primary' name='update' value='", $uneBAR['id_bar'], "' type='submit'>Modifier</button> <button class='btn btn-danger' name='delete' value='", $uneBAR['id_bar'], "' type='submit'>Supprimer</button></td>
                                         </tr>";
                                     }
                                     ?>

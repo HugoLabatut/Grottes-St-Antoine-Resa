@@ -34,18 +34,7 @@ $oChambre = new Chambre($con);
 
 $chambresDispos = $oChambre->getChambresByDispoAndCategorie($cate);
 
-echo "ID catégorie = ", $cate, "<br>";
-
-$i = 0;
-
-foreach ($chambresDispos as $uneChambre) {
-    $i++;
-    if ($i == 1) {
-        echo "ID = ", $uneChambre['id_chambre'], " Lib = ", $uneChambre['lib_chambre'], "<br>";
-        $oResa->setDateResa($uneChambre['id_chambre'], $ddeb, $dfin, $cate, $idResa);
-        $oChambre->setChambreIndispo($uneChambre['id_chambre']);
-    }
-}
+$oChambre->setChambreByResa($idResa, $cate, $ddeb, $dfin);
 ?>
 
 <script>
