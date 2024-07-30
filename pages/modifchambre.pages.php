@@ -22,5 +22,6 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
 <body>
 
 </body>
+<script src="../js/inactivite.js"></script>
 
 </html>

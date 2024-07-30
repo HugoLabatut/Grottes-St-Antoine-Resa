@@ -18,6 +18,7 @@ if (!empty($_POST['nom_admin']) and !empty($_POST['mdp_admin'])) {
                 alert('DEBUG - Ok.');
                 window.location.replace('../pages/dashboard.pages.php');
         </script>";
+        exit();
     } else {
         echo "<script>
                 alert('Le nom d\'administrateur ou le mot de passe est incorrect.');

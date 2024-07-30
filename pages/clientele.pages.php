@@ -79,5 +79,6 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     </div>
     <?php include("../template/footer.template.php"); ?>
 </body>
+<script src="../js/inactivite.js"></script>
 
 </html>

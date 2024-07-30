@@ -8,7 +8,20 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                 window.location.replace('../pages/logadmin.pages.php');
         </script>";
 }
-// var_dump($_SESSION['nom_admin']);
+/*
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > 5) {
+    session_unset();
+    session_destroy();
+    echo "<script>
+                alert('Vous êtes inactif depuis trop longtemps. Par sécurité, vous êtes déconnecté.');
+                window.location.replace('../pages/logadmin.pages.php');
+    </script>";
+}
+
+var_dump($_SESSION['nom_admin']);
+$_SESSION['last_activity'] = time();
+var_dump($_SESSION['last_activity']);
+*/
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +58,9 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
                 <h1>Tableau de bord</h1>
                 <p style='text-align: justify;'>
                     Cette page permet de consulter les données du site (réservations, catégories des locations, tarifs, etc.). Elle ne doit être accessible que par le personnel. Les codes de connexion doivent donc rester confidentiels.
+                </p>
+                <p style='text-align: justify;' class='alert alert-primary'>
+                    Pour la sécurité des données, ce site utilise un système de déconnexion automatique. Le délai est fixé à 3 minutes.
                 </p>
                 <p style='text-align: justify;' class='alert alert-danger'>
                     Vous ne devez, en aucun cas, donner/prêter vos codes de connexion à d'autres personnes. Cela peut être dangereux pour la sécurité de vos données personnelles. Veillez à ce que vos codes soient sauvegardés à l'aide d'un gestionnaire de mot de passes (Exemple : KeePass) et changés régulièrement (consulter la section 'Protection du compte' dans la page de personnalisation du compte d'administrateur).
@@ -102,5 +118,6 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <?php include("../template/footer.template.php"); ?>
 </body>
 <script src="../js/calendrier_resa.js"></script>
+<script src="../js/inactivite.js"></script>
 
 </html>

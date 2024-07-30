@@ -125,6 +125,7 @@ if (!isset($_SESSION['nom_admin']) and !isset($_SESSION['mdp_admin'])) {
     <script src="../js/jquery.min.js"></script>
     <script src="../js/cate_autocomplete.js"></script>
     <script src="../js/cp_autocomplete.js"></script>
+    <script src="../js/inactivite.js"></script>
 </body>
 
 </html>
